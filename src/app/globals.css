@@ -224,18 +224,6 @@ body { margin: 0; overflow-x: hidden; background: #03060b; color: var(--color-te
   border-color: rgba(213,178,119,.34);
   box-shadow: 0 40px 95px rgba(0,0,0,.72), 0 0 0 8px rgba(105,74,39,.28), 0 0 50px rgba(201,154,89,.12);
 }
-.final-exhibition__thangka::before {
-  content: "";
-  position: absolute;
-  inset: -5% auto 18% -41%;
-  width: 74%;
-  z-index: 2;
-  opacity: .38;
-  transform: rotate(-6deg);
-  background: url('/seed_photos/footer_2026-07-31 15.49.49.jpeg') center/cover no-repeat;
-  border: 1px solid rgba(211,177,119,.28);
-  box-shadow: 0 25px 60px rgba(0,0,0,.7);
-}
 
 @media (min-width: 1024px) {
   .process-orbit__steps::after { left: 0; right: 0; top: 2rem; bottom: auto; width: auto; height: 1px; background: linear-gradient(to right, rgba(198,162,108,.42), rgba(156,193,223,.2), transparent); }
