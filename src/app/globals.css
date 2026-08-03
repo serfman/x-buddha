@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg-primary: #07090e;
+  --color-bg-secondary: #0c1119;
+  --color-text-primary: #f1f0eb;
+  --color-text-muted: #9ca9b9;
+  --color-accent-cold: #b7d2e8;
+  --color-accent-bronze: #a77c4e;
+  --color-border: rgba(190, 210, 230, 0.13);
+  --shadow-glow: 0 0 42px rgba(154, 194, 226, 0.14);
+  --radius-sm: 0.75rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 2rem;
+  --container-width: 1440px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--color-bg-primary); }
+body { margin: 0; overflow-x: hidden; background: var(--color-bg-primary); color: var(--color-text-primary); font-family: Manrope, "Segoe UI", Arial, sans-serif; text-rendering: optimizeLegibility; }
+::selection { background: rgba(183, 210, 232, .25); color: white; }
+:focus-visible { outline: 2px solid var(--color-accent-cold); outline-offset: 3px; }
+
+.eyebrow { font-size: .7rem; line-height: 1rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--color-accent-cold); }
+.star-field {
+  opacity: .45;
+  background-image:
+    radial-gradient(circle at 12% 24%, rgba(255,255,255,.8) 0 1px, transparent 1.3px),
+    radial-gradient(circle at 76% 18%, rgba(183,210,232,.6) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 44% 72%, rgba(255,255,255,.4) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 88% 69%, rgba(255,255,255,.55) 0 1px, transparent 1.2px);
+  background-size: 280px 260px, 330px 310px, 390px 360px, 470px 440px;
+  mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,.8) 70%, transparent 100%);
+}
+.article-body { color: var(--color-text-muted); font-size: 1.05rem; line-height: 1.85; }
+.article-body section + section { margin-top: 3rem; }
+.article-body h2 { color: var(--color-text-primary); font-size: 1.75rem; line-height: 1.25; letter-spacing: -.03em; font-weight: 500; margin-bottom: 1.25rem; }
+.article-body p + p { margin-top: 1.1rem; }
+.legal-note { border-left: 2px solid var(--color-accent-bronze); background: rgba(167,124,78,.08); padding: 1.25rem 1.5rem; color: #c6b39c; line-height: 1.7; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

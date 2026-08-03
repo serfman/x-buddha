@@ -1,0 +1,7 @@
+node_modules/
+.next/
+.open-next/
+dist/
+*.tar.gz
+.DS_Store
+.dev.vars*
