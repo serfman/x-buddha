@@ -7,7 +7,7 @@ import { site } from "@/data/site";
 
 export function HeroSection() {
   return (
-    <section className="relative flex min-h-svh items-center overflow-hidden pb-16 pt-28 sm:pt-32 lg:pb-20" aria-labelledby="hero-title">
+    <section className="hero-exhibition relative flex min-h-svh items-center overflow-hidden pb-16 pt-28 sm:pt-32 lg:pb-20" aria-labelledby="hero-title">
       <div className="star-field absolute inset-0" aria-hidden="true" />
       <div className="absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-cold/[0.06] blur-3xl" aria-hidden="true" />
       <Container className="relative grid items-center gap-12 lg:grid-cols-[.86fr_1.14fr] lg:gap-8 xl:gap-14">

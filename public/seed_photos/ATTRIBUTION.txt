@@ -1,0 +1,8 @@
+Starry night in Langtang.jpg
+Photo by Q-lieb-in (Yevhen Samuchenko), 2014.
+Source: https://commons.wikimedia.org/wiki/File:Starry_night_in_Langtang.jpg
+License: Creative Commons Attribution-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-sa/4.0/
+
+The image is used as the background of the final exhibition screen with
+CSS color, brightness, contrast, and cropping adjustments.

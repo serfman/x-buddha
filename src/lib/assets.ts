@@ -5,6 +5,8 @@ export const sliderImages = Array.from(
 
 export const centerImage = "/seed_photos/center.jpeg";
 
+export const himalayaImage = "/seed_photos/himalayas-starry-night.jpg";
+
 export const footerImages = [
   "/seed_photos/footer_2026-07-31 15.49.40.jpeg",
   "/seed_photos/footer_2026-07-31 15.49.42.jpeg",

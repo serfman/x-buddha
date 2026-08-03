@@ -9,5 +9,5 @@ import { site } from "@/data/site";
 export const metadata: Metadata = { title: "Оценка буддийских статуэток", description: "Оценка, выкуп, атрибуция, экспертиза и размещение буддийских артефактов на аукционе." };
 
 export default function Home() {
-  return <main><HeroSection /><EvaluationFactorsSection /><EvaluationProcessSection /><VideoSection url={site.rutubeUrl} /><FinalSection /></main>;
+  return <main className="home-exhibition"><HeroSection /><EvaluationFactorsSection /><EvaluationProcessSection /><VideoSection url={site.rutubeUrl} /><FinalSection /></main>;
 }

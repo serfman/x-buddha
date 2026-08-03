@@ -10,10 +10,10 @@ const steps = [
 
 export function EvaluationProcessSection() {
   return (
-    <section id="process" className="border-t border-white/[0.06] bg-panel/40 py-24 sm:py-32">
+    <section id="process" className="process-orbit relative overflow-hidden border-t border-white/[0.06] py-24 sm:py-32">
       <Container>
         <SectionHeading eyebrow="Три простых шага" title="Как узнать стоимость прямо сейчас?" description="Вам не нужно никуда ехать. Оценка проходит полностью онлайн." />
-        <ol className="relative mt-14 grid gap-8 lg:grid-cols-3 lg:gap-0">
+        <ol className="process-orbit__steps relative mt-14 grid gap-8 lg:grid-cols-3 lg:gap-0">
           <span className="absolute left-0 right-0 top-8 hidden h-px bg-gradient-to-r from-cold/45 via-cold/20 to-transparent lg:block" aria-hidden="true" />
           {steps.map((step, index) => (
             <li key={step} className="relative pr-7 lg:pr-14">
