@@ -302,9 +302,17 @@ body { margin: 0; overflow-x: hidden; background: #03060b; color: var(--color-te
   }
 }
 .article-body { color: var(--color-text-muted); font-size: 1.05rem; line-height: 1.85; }
-.article-body section + section { margin-top: 3rem; }
-.article-body h2 { color: var(--color-text-primary); font-size: 1.75rem; line-height: 1.25; letter-spacing: -.03em; font-weight: 500; margin-bottom: 1.25rem; }
+.article-body h2 { color: var(--color-text-primary); font-size: 1.75rem; line-height: 1.25; letter-spacing: -.03em; font-weight: 500; margin: 3rem 0 1.25rem; }
+.article-body h3 { color: var(--color-text-primary); font-size: 1.3rem; line-height: 1.35; font-weight: 500; margin: 2rem 0 1rem; }
 .article-body p + p { margin-top: 1.1rem; }
+.article-body ul, .article-body ol { margin: 1.25rem 0; padding-left: 1.5rem; }
+.article-body ul { list-style: disc; }
+.article-body ol { list-style: decimal; }
+.article-body li + li { margin-top: .45rem; }
+.article-body a { color: var(--color-accent-cold); text-decoration: underline; text-underline-offset: .2em; }
+.article-body blockquote { margin: 2rem 0; border-left: 2px solid var(--color-accent-bronze); background: rgba(167,124,78,.08); padding: 1.25rem 1.5rem; color: #c6b39c; }
+.article-body figure { margin: 2.5rem 0; }
+.article-body figcaption { margin-top: .75rem; text-align: center; font-size: .85rem; color: var(--color-text-muted); }
 .legal-note { border-left: 2px solid var(--color-accent-bronze); background: rgba(167,124,78,.08); padding: 1.25rem 1.5rem; color: #c6b39c; line-height: 1.7; }
 
 @media (prefers-reduced-motion: reduce) {

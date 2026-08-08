@@ -3,6 +3,10 @@ node_modules/
 .open-next/
 dist/
 out/
+.env*
+!.env.example
+directus/database/
+directus/uploads/
 *.tar.gz
 .DS_Store
 .dev.vars*

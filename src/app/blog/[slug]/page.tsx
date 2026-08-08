@@ -1,34 +1,72 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { MessengerButtons } from "@/components/contacts/MessengerButtons";
-import { articles } from "@/data/articles";
+import { ArticleContent } from "@/components/blog/ArticleContent";
+import { formatArticleDate, getDirectusAssetUrl, getPublishedArticle, getPublishedArticleSlugs } from "@/lib/directus/articles";
+import type { Article } from "@/types/content";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() { return articles.map(({ slug }) => ({ slug })); }
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  try {
+    return await getPublishedArticleSlugs();
+  } catch {
+    return [];
+  }
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const article = articles.find((item) => item.slug === slug);
-  return article ? { title: article.title, description: article.excerpt, openGraph: { title: article.title, description: article.excerpt, type: "article" } } : {};
+  try {
+    const article = await getPublishedArticle(slug);
+    if (!article) return {};
+    const title = article.seoTitle || article.title;
+    const description = article.seoDescription || article.excerpt;
+    const socialImage = article.ogImage || article.cover;
+    const socialImageUrl = socialImage ? getDirectusAssetUrl(socialImage.id) : "/og.png";
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        type: "article",
+        publishedTime: article.publishedAt,
+        modifiedTime: article.updatedAt || undefined,
+        images: [{ url: socialImageUrl, width: socialImage?.width || 1733, height: socialImage?.height || 907, alt: socialImage?.description || socialImage?.title || article.title }],
+      },
+      twitter: { card: "summary_large_image", title, description, images: [socialImageUrl] },
+    };
+  } catch {
+    return { title: "Статья временно недоступна" };
+  }
 }
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-  const article = articles.find((item) => item.slug === slug);
+  let article: Article | null;
+  try {
+    article = await getPublishedArticle(slug);
+  } catch (error) {
+    console.error("Unable to load an article from Directus.", error);
+    return <main className="min-h-screen pb-24 pt-36"><Container><div className="mx-auto max-w-3xl"><p className="eyebrow">База знаний</p><h1 className="mt-5 text-4xl font-medium text-milk sm:text-6xl">Статья временно недоступна</h1><p className="mt-5 text-lg leading-8 text-muted">Не удалось связаться с хранилищем статей. Пожалуйста, попробуйте позже.</p><Link href="/blog" className="mt-8 inline-flex text-sm text-cold">← Вернуться к статьям</Link></div></Container></main>;
+  }
   if (!article) notFound();
   return (
     <main className="min-h-screen pb-24 pt-28 sm:pt-36">
       <Container>
         <nav className="text-sm text-muted" aria-label="Хлебные крошки"><Link href="/" className="hover:text-milk">Главная</Link><span className="mx-2">/</span><Link href="/blog" className="hover:text-milk">Статьи</Link></nav>
         <article className="mx-auto mt-12 max-w-4xl">
-          <p className="eyebrow">{article.accent}</p>
+          <p className="eyebrow">База знаний</p>
           <h1 className="mt-5 text-balance text-4xl font-medium leading-tight tracking-[-.045em] text-milk sm:text-6xl">{article.title}</h1>
-          <p className="mt-5 text-sm text-muted">{article.date} · {article.readTime}</p>
-          <div className="relative mt-12 aspect-[16/7] overflow-hidden rounded-[1.5rem] border border-white/10 bg-[radial-gradient(circle_at_65%_30%,rgba(174,205,232,.18),transparent_30%),radial-gradient(circle_at_30%_80%,rgba(158,117,69,.13),transparent_35%),#0c1018]"><span className="absolute bottom-7 left-7 text-xs uppercase tracking-[.28em] text-cold/60">X-Buddha · Архив</span></div>
-          <div className="article-body mt-14">{article.sections.map((section) => <section key={section.heading}><h2>{section.heading}</h2>{section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</section>)}</div>
+          <p className="mt-5 text-sm text-muted">{formatArticleDate(article.publishedAt)}</p>
+          {article.cover ? <div className="relative mt-12 aspect-[16/7] overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#0c1018]"><Image src={getDirectusAssetUrl(article.cover.id)} alt={article.cover.description || article.cover.title || `Обложка статьи «${article.title}»`} fill priority sizes="(min-width: 1024px) 896px, 100vw" className="object-cover" /></div> : null}
+          <ArticleContent html={article.content} />
           <aside className="mt-16 border-y border-white/10 py-9"><h2 className="text-2xl font-medium text-milk">Оценить предмет</h2><p className="mt-3 max-w-xl leading-7 text-muted">Отправьте фотографии в удобный мессенджер для предварительной оценки.</p><div className="mt-5"><MessengerButtons /></div></aside>
           <Link href="/blog" className="mt-10 inline-flex text-sm text-cold">← Вернуться к статьям</Link>
         </article>

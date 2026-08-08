@@ -1,8 +1,8 @@
-# X-Buddha — архитектура frontend-прототипа
+# X-Buddha — архитектура frontend
 
 ## 1. Назначение
 
-Создать самостоятельный визуальный frontend-прототип коммерческого сайта X-Buddha без backend, CMS, API, форм и загрузки файлов.
+Создать frontend коммерческого сайта X-Buddha. Главная страница остаётся автономной, а блог получает опубликованный контент через изолированный серверный слой Directus.
 
 Прототип должен:
 
@@ -28,7 +28,6 @@
 Не подключать:
 
 - backend;
-- Directus;
 - Supabase;
 - БД;
 - API routes;
@@ -109,10 +108,12 @@ src/
   data/
     site.ts
     messengers.ts
-    articles.ts
     evaluation-factors.ts
   lib/
     assets.ts
+    directus/
+      client.ts
+      articles.ts
     utils.ts
   types/
     content.ts
@@ -148,7 +149,6 @@ public/
 ```text
 src/data/site.ts
 src/data/messengers.ts
-src/data/articles.ts
 src/data/evaluation-factors.ts
 ```
 
@@ -158,7 +158,7 @@ src/data/evaluation-factors.ts
 - ссылки Telegram и MAX;
 - URL RuTube;
 - длительность слайда;
-- mock-статьи;
+- статьи не хранятся во frontend-конфигурации и поступают из Directus;
 - подписи факторов оценки.
 
 ## 8. Клиентские компоненты
@@ -254,10 +254,10 @@ Mobile-композиция:
 - один H1 на страницу;
 - корректная иерархия H2/H3;
 - metadata для всех маршрутов;
-- Open Graph-заглушки;
+- глобальный Open Graph fallback и SEO/OG-поля статей из Directus;
 - семантические `header`, `main`, `section`, `article`, `footer`;
 - человекочитаемые slug;
-- mock-статьи индексируемой структуры;
+- опубликованные CMS-статьи индексируемой структуры;
 - готовность к schema.org в следующем этапе.
 
 ## 13. Производительность
@@ -278,7 +278,29 @@ Mobile-композиция:
 - проект запускается командами `npm install` и `npm run dev`;
 - `npm run build` проходит без ошибок;
 - TypeScript не содержит `any` без необходимости;
-- нет backend-зависимостей;
+- UI не зависит от административных credentials Directus;
 - нет горизонтального скролла на 360 px;
 - структура не усложнена раньше времени;
-- дизайн можно сохранить при дальнейшем подключении CMS.
+- дизайн сохраняется при обновлении контента через CMS.
+
+## 15. Блог и Directus
+
+Directus выбран как headless CMS, потому что предоставляет готовые коллекции, rich-text редактор, медиатеку, статусы публикации и granular permissions без разработки собственного административного интерфейса.
+
+```text
+Directus
+  ↓
+server-side data layer (`src/lib/directus/`)
+  ↓
+Next.js Server Components + revalidation
+  ↓
+существующий Blog UI
+```
+
+Публичный frontend обращается к Directus без токена. Public policy разрешает только чтение записей `articles` со `status = published` и изображений. UI-компоненты не выполняют CMS-запросы напрямую.
+
+Коллекция `articles` содержит `id`, `status`, `title`, уникальный `slug`, `excerpt`, HTML rich content в `content`, `cover`, `published_at`, автоматически обновляемый `updated_at`, `seo_title`, `seo_description` и `og_image`. HTML очищается allow-list санитайзером на сервере; изображения rich content принимаются только с `/assets/` настроенного Directus origin.
+
+Список и страницы статей кэшируются серверным `fetch` Next.js с revalidation раз в 5 минут. Ошибка CMS изолируется маршрутами блога; mock-контент не используется как production fallback. Динамическое обновление требует серверного Next.js runtime, поэтому статический `output: export` не применяется.
+
+Развёртывание схемы и редакторский процесс описаны только в [инструкции Directus](../cms/directus.md).

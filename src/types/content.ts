@@ -10,14 +10,26 @@ export type ImageAsset = {
   alt: string;
 };
 
+export type ArticleImage = {
+  id: string;
+  width: number | null;
+  height: number | null;
+  title: string | null;
+  description: string | null;
+};
+
 export type Article = {
+  id: string | number;
   slug: string;
   title: string;
   excerpt: string;
-  date: string;
-  readTime: string;
-  accent: string;
-  sections: Array<{ heading: string; body: string[] }>;
+  content: string;
+  publishedAt: string;
+  updatedAt: string | null;
+  cover: ArticleImage | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  ogImage: ArticleImage | null;
 };
 
 export type EvaluationFactor = {

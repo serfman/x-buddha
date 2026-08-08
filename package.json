@@ -5,19 +5,25 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "node scripts/stage-sites-build.mjs",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "cms:up": "docker compose -f docker-compose.directus.yml up -d",
+    "cms:down": "docker compose -f docker-compose.directus.yml down",
+    "cms:schema:apply": "docker compose -f docker-compose.directus.yml exec directus npx directus schema apply --yes /directus/snapshots/articles.yaml",
+    "cms:configure-access": "node --env-file=.env scripts/configure-directus-access.mjs"
   },
   "dependencies": {
+    "html-react-parser": "^6.1.5",
     "next": "16.2.12",
     "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "react-dom": "19.1.1",
+    "sanitize-html": "^2.17.6"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
+    "@types/sanitize-html": "^2.16.1",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.31.0",
     "eslint-config-next": "16.2.12",

@@ -1,0 +1,23 @@
+services:
+  directus:
+    image: directus/directus:11.17.4
+    ports:
+      - "${DIRECTUS_PORT:-8055}:8055"
+    volumes:
+      - directus_database:/directus/database
+      - directus_uploads:/directus/uploads
+      - ./directus/snapshots:/directus/snapshots:ro
+    environment:
+      SECRET: ${DIRECTUS_SECRET:?Set DIRECTUS_SECRET}
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:?Set DIRECTUS_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:?Set DIRECTUS_ADMIN_PASSWORD}
+      DB_CLIENT: sqlite3
+      DB_FILENAME: /directus/database/data.db
+      PUBLIC_URL: ${DIRECTUS_PUBLIC_URL:-http://localhost:8055}
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: ${SITE_URL:-http://localhost:3000}
+      TELEMETRY: "false"
+
+volumes:
+  directus_database:
+  directus_uploads:
