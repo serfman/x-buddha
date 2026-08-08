@@ -6,7 +6,7 @@
 - [ ] Оптимизировать production-медиа.
 - [ ] Получить финальный домен и задать `SITE_URL` в production environment.
 - [ ] Получить реальный ID Яндекс.Метрики, задать `NEXT_PUBLIC_YANDEX_METRIKA_ID` и создать цели для событий CTA.
-- [ ] Настроить остальные production environment-переменные Next.js и Directus.
+- [ ] Настроить production environment-переменные Next.js и Directus по `.env.example`.
 
 ## Следом
 
