@@ -163,21 +163,27 @@ body { margin: 0; overflow-x: hidden; background: #03060b; color: var(--color-te
   top: 50%;
   width: 1.5rem;
   height: 1px;
-  background: rgba(164,201,233,.38);
+  background: rgba(190,216,237,.62);
+  box-shadow: 0 0 6px rgba(164,201,233,.18);
 }
 .evaluation-factor-copy--left::after { right: 0; }
 .evaluation-factor-copy--right::after { left: 0; }
 .evaluation-marker-line {
   fill: none;
-  stroke: rgba(164,201,233,.38);
-  stroke-width: .18;
+  stroke: rgba(190,216,237,.68);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 2px rgba(164,201,233,.24));
 }
 .evaluation-dimension-line {
   fill: none;
-  stroke: rgba(190,151,103,.72);
-  stroke-width: .22;
+  stroke: rgba(208,170,116,.84);
+  stroke-width: 1;
+  stroke-linecap: round;
   vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 2px rgba(190,151,103,.22));
 }
 .evaluation-mobile-marker {
   position: absolute;
