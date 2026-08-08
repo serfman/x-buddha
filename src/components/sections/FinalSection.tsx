@@ -22,7 +22,7 @@ export function FinalSection() {
           <div className="max-w-xl py-4 lg:py-16">
             <h2 id="final-title" className="text-balance text-4xl font-medium tracking-[-.05em] text-white sm:text-5xl lg:text-6xl">{site.final.title}</h2>
             <p className="mt-6 max-w-md text-base leading-7 text-white/70 sm:text-lg">{site.final.cta}</p>
-            <div className="final-exhibition__contacts mt-8"><MessengerButtons dark /></div>
+            <div className="final-exhibition__contacts mt-8"><MessengerButtons dark location="final" /></div>
           </div>
           <div className="final-exhibition__thangka relative mx-auto aspect-[.76] w-full max-w-[310px] overflow-hidden rounded-[.45rem] border sm:max-w-[350px] lg:mr-4 lg:max-w-[390px] lg:rotate-[1.5deg]">
             <Image

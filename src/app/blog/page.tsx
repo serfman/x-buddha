@@ -2,9 +2,20 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { getPublishedArticles } from "@/lib/directus/articles";
+import { DEFAULT_OG_IMAGE, getCanonicalUrl } from "@/lib/seo";
 import type { Article } from "@/types/content";
 
-export const metadata: Metadata = { title: "Статьи", description: "Материалы X-Buddha об атрибуции, оценке и сохранении буддийских артефактов." };
+const title = "Статьи об оценке буддийских артефактов";
+const description = "Материалы X-Buddha об атрибуции, оценке и сохранении буддийских статуэток и артефактов.";
+const canonicalUrl = getCanonicalUrl("/blog/");
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: canonicalUrl },
+  openGraph: { title, description, url: canonicalUrl, type: "website", images: [DEFAULT_OG_IMAGE] },
+  twitter: { card: "summary_large_image", title, description, images: [DEFAULT_OG_IMAGE.url] },
+};
 export const revalidate = 300;
 
 export default async function BlogPage() {

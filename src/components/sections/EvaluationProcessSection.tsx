@@ -19,7 +19,7 @@ export function EvaluationProcessSection() {
         </ol>
         <div id="contact" className="mt-14 flex flex-col gap-6 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <div><p className="text-xl font-medium text-milk">{site.process.cta}</p><p className="mt-2 text-sm text-muted">{site.process.confidentiality}</p></div>
-          <MessengerButtons />
+          <MessengerButtons location="how_to" />
         </div>
       </Container>
     </section>

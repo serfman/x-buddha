@@ -15,6 +15,12 @@ type DirectusArticle = {
   og_image: ArticleImage | null;
 };
 
+type DirectusArticleSitemapEntry = {
+  slug: string;
+  published_at: string;
+  updated_at: string | null;
+};
+
 const articleFields = ["id", "title", "slug", "excerpt", "content", "published_at", "updated_at", "cover.id", "cover.width", "cover.height", "cover.title", "cover.description", "seo_title", "seo_description", "og_image.id", "og_image.width", "og_image.height", "og_image.title", "og_image.description"].join(",");
 
 function mapArticle(article: DirectusArticle): Article {
@@ -57,6 +63,23 @@ export async function getPublishedArticle(slug: string): Promise<Article | null>
 export async function getPublishedArticleSlugs(): Promise<Array<{ slug: string }>> {
   const params = new URLSearchParams({ fields: "slug", "filter[status][_eq]": "published", limit: "-1" });
   return directusFetch<Array<{ slug: string }>>("items/articles", params);
+}
+
+export async function getPublishedArticleSitemapEntries(): Promise<
+  Array<{ slug: string; publishedAt: string; updatedAt: string | null }>
+> {
+  const params = new URLSearchParams({
+    fields: "slug,published_at,updated_at",
+    "filter[status][_eq]": "published",
+    sort: "-published_at",
+    limit: "-1",
+  });
+  const articles = await directusFetch<DirectusArticleSitemapEntry[]>("items/articles", params);
+  return articles.map((article) => ({
+    slug: article.slug,
+    publishedAt: article.published_at,
+    updatedAt: article.updated_at,
+  }));
 }
 
 export function getDirectusAssetUrl(id: string): string {

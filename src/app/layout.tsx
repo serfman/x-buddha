@@ -2,14 +2,29 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { FloatingContactButton } from "@/components/contacts/FloatingContactButton";
+import { YandexMetrika } from "@/components/analytics/YandexMetrika";
+import { DEFAULT_OG_IMAGE, HOME_DESCRIPTION, HOME_TITLE, SITE_NAME, getSiteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://x-buddha.ru"),
-  title: { default: "X-Buddha — оценка буддийских артефактов", template: "%s — X-Buddha" },
-  description: "Оценка, атрибуция и экспертиза буддийских статуэток и артефактов.",
-  openGraph: { title: "X-Buddha", description: "Экспертная оценка буддийских статуэток и артефактов.", type: "website", locale: "ru_RU" },
+  metadataBase: getSiteUrl(),
+  title: { default: HOME_TITLE, template: `%s — ${SITE_NAME}` },
+  description: HOME_DESCRIPTION,
+  openGraph: {
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    siteName: SITE_NAME,
+    type: "website",
+    locale: "ru_RU",
+    images: [DEFAULT_OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE.url],
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="ru"><body><Header />{children}<FloatingContactButton /></body></html>;
+  return <html lang="ru"><body><Header />{children}<FloatingContactButton /><YandexMetrika /></body></html>;
 }
