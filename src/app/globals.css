@@ -230,10 +230,40 @@ body { margin: 0; overflow-x: hidden; background: #03060b; color: var(--color-te
   text-shadow: 0 0 34px rgba(183,139,77,.25);
 }
 
+.final-journey {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 76% 15%, rgba(54,94,130,.15), transparent 32%),
+    linear-gradient(180deg, rgba(5,10,17,.38) 0%, #050910 39%, #02050a 100%);
+}
+.final-journey::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: 48%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 82% 22%, rgba(255,255,255,.24) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 17% 68%, rgba(183,210,232,.22) 0 1px, transparent 1.4px);
+  background-size: 310px 290px, 430px 410px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.8), transparent);
+}
 .museum-video {
-  background: radial-gradient(ellipse at 72% 42%, rgba(46,87,124,.13), transparent 35%);
+  background: radial-gradient(ellipse at 72% 42%, rgba(46,87,124,.12), transparent 37%);
+}
+.museum-video::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 9rem;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(2,5,10,.52));
 }
 .museum-video__frame {
+  z-index: 1;
   border-color: rgba(199,164,109,.24);
   box-shadow: 0 34px 95px rgba(0,0,0,.56), 0 0 0 9px rgba(190,154,96,.025), 0 0 0 10px rgba(195,164,116,.09);
 }
@@ -245,10 +275,13 @@ body { margin: 0; overflow-x: hidden; background: #03060b; color: var(--color-te
   box-shadow: inset 0 0 70px rgba(0,0,0,.55);
 }
 
-.final-exhibition { background: #02050a; }
+.final-exhibition {
+  margin-top: -1px;
+  background: #02050a;
+}
 .final-exhibition__himalayas {
-  object-position: center 48%;
-  filter: saturate(.64) contrast(1.11) brightness(.58) sepia(.08);
+  object-position: center 53%;
+  filter: saturate(.66) contrast(1.12) brightness(.56) sepia(.07);
 }
 .final-exhibition::before {
   content: "";
@@ -257,27 +290,44 @@ body { margin: 0; overflow-x: hidden; background: #03060b; color: var(--color-te
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 69% 13%, rgba(109,149,183,.13), transparent 24%),
-    linear-gradient(180deg, rgba(2,5,10,.13) 0%, rgba(3,7,12,.03) 30%, rgba(7,10,13,.56) 57%, rgba(4,6,9,.94) 100%);
+    radial-gradient(ellipse at 72% 10%, rgba(109,149,183,.13), transparent 24%),
+    linear-gradient(180deg, #02050a 0%, rgba(2,5,10,.73) 8%, transparent 28%, rgba(4,6,9,.9) 91%, #040609 100%);
 }
 .final-exhibition::after {
   content: "";
   position: absolute;
-  inset: 42% -10% auto;
+  inset: 18% -8% auto;
   z-index: 2;
-  height: 36%;
+  height: 58%;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 28% 50%, rgba(212,218,218,.16), transparent 32%),
-    radial-gradient(ellipse at 70% 50%, rgba(185,196,201,.17), transparent 34%);
-  filter: blur(24px);
+    radial-gradient(ellipse at 22% 50%, rgba(212,218,218,.1), transparent 29%),
+    radial-gradient(ellipse at 73% 48%, rgba(185,196,201,.14), transparent 32%);
+  filter: blur(30px);
 }
-.final-exhibition > div:not(.final-exhibition__thangka) { z-index: 3; }
+.final-exhibition__shade {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(3,6,10,.94) 0%, rgba(3,6,10,.82) 43%, rgba(3,6,10,.25) 78%),
+    linear-gradient(0deg, rgba(3,5,8,.96) 0%, rgba(3,6,10,.42) 43%, rgba(3,6,10,.08) 72%);
+}
+.final-exhibition > div:not(.final-exhibition__shade) { z-index: 3; }
 .final-exhibition__thangka {
-  z-index: 4;
   border-color: rgba(213,178,119,.34);
-  box-shadow: 0 40px 95px rgba(0,0,0,.72), 0 0 0 8px rgba(105,74,39,.28), 0 0 50px rgba(201,154,89,.12);
+  background: rgba(7,10,14,.78);
+  box-shadow: 0 42px 100px rgba(0,0,0,.72), 0 0 0 8px rgba(105,74,39,.24), 0 0 54px rgba(201,154,89,.12);
 }
+.final-exhibition__contacts a {
+  min-width: 9.75rem;
+  justify-content: center;
+  padding-block: .75rem;
+  border-color: rgba(221,230,236,.3);
+  background: rgba(2,5,9,.48);
+  backdrop-filter: blur(12px);
+}
+.final-exhibition__contacts a:hover { background: rgba(181,207,227,.1); }
+.final-exhibition__footer a { transition: color .2s ease; }
+.final-exhibition__footer a:hover { color: rgba(255,255,255,.92); }
 
 @media (min-width: 1024px) {
   .process-orbit__steps::after { left: 0; right: 0; top: 2rem; bottom: auto; width: auto; height: 1px; background: linear-gradient(to right, rgba(198,162,108,.42), rgba(156,193,223,.2), transparent); }
@@ -286,20 +336,25 @@ body { margin: 0; overflow-x: hidden; background: #03060b; color: var(--color-te
 @media (max-width: 767px) {
   .hero-exhibition::after { inset-inline: 12%; }
   .evaluation-lab { background-size: 48px 48px, 48px 48px, auto, auto; }
-  .final-exhibition__himalayas { object-position: 58% center; }
-  .final-exhibition::after {
-    inset: 25% -7% auto auto;
-    width: 54%;
-    height: 45%;
-    opacity: .3;
-    background:
-      linear-gradient(180deg, rgba(4,7,11,.08), rgba(4,7,11,.6)),
-      url('/seed_photos/footer_2026-07-31 15.49.49.jpeg') center/cover no-repeat;
-    border: 1px solid rgba(205,170,112,.2);
-    box-shadow: 0 26px 65px rgba(0,0,0,.58);
-    filter: none;
-    transform: rotate(3deg);
+  .final-exhibition__himalayas {
+    object-position: 62% center;
+    filter: saturate(.7) contrast(1.08) brightness(.66) sepia(.06);
   }
+  .final-exhibition__shade {
+    background:
+      linear-gradient(180deg, rgba(3,6,10,.88) 0%, rgba(3,6,10,.48) 21%, rgba(3,6,10,.3) 49%, rgba(3,5,8,.92) 88%),
+      linear-gradient(90deg, rgba(3,6,10,.64), rgba(3,6,10,.14));
+  }
+  .final-exhibition::after {
+    inset: 18% -30% auto;
+    width: auto;
+    height: 58%;
+    opacity: .7;
+    background: radial-gradient(ellipse, rgba(190,203,209,.13), transparent 58%);
+    filter: blur(20px);
+  }
+  .final-exhibition__contacts > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .final-exhibition__contacts a { min-width: 0; padding-inline: .7rem; }
 }
 .article-body { color: var(--color-text-muted); font-size: 1.05rem; line-height: 1.85; }
 .article-body h2 { color: var(--color-text-primary); font-size: 1.75rem; line-height: 1.25; letter-spacing: -.03em; font-weight: 500; margin: 3rem 0 1.25rem; }
