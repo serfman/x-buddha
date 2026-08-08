@@ -20,5 +20,8 @@ export type EvaluationFactor = {
   title: string;
   description: string;
   side: "left" | "right";
-  point: { x: number; y: number };
+  lineAnchorY: number;
+  marker:
+    | { kind: "point"; x: number; y: number }
+    | { kind: "dimension"; x: number; topY: number; bottomY: number };
 };

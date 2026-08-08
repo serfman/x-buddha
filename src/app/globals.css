@@ -151,6 +151,54 @@ body { margin: 0; overflow-x: hidden; background: #03060b; color: var(--color-te
   filter: saturate(1.08) contrast(1.13) brightness(.88) drop-shadow(0 30px 30px rgba(0,0,0,.65)) drop-shadow(0 0 24px rgba(190,147,84,.13));
   mask-image: radial-gradient(ellipse at 50% 57%, black 47%, rgba(0,0,0,.92) 60%, transparent 78%);
 }
+.evaluation-factor-copy {
+  align-self: center;
+  padding-block: 1rem;
+}
+.evaluation-factor-copy--left { padding-right: 1.5rem; }
+.evaluation-factor-copy--right { padding-left: 1.5rem; }
+.evaluation-factor-copy::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 1.5rem;
+  height: 1px;
+  background: rgba(164,201,233,.38);
+}
+.evaluation-factor-copy--left::after { right: 0; }
+.evaluation-factor-copy--right::after { left: 0; }
+.evaluation-marker-line {
+  fill: none;
+  stroke: rgba(164,201,233,.38);
+  stroke-width: .18;
+  vector-effect: non-scaling-stroke;
+}
+.evaluation-dimension-line {
+  fill: none;
+  stroke: rgba(190,151,103,.72);
+  stroke-width: .22;
+  vector-effect: non-scaling-stroke;
+}
+.evaluation-mobile-marker {
+  position: absolute;
+  z-index: 20;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  transform: translate(-50%, -50%);
+  place-items: center;
+  border: 1px solid rgba(164,201,233,.5);
+  border-radius: 999px;
+  background: rgba(5,10,17,.85);
+  color: var(--color-accent-cold);
+  box-shadow: 0 0 18px rgba(164,201,233,.18);
+  font-size: 11px;
+  font-weight: 500;
+}
+.evaluation-mobile-marker--dimension {
+  border-color: rgba(190,151,103,.62);
+  color: #d7b783;
+}
 .evaluation-lab h3 { color: #e8d8bd; }
 
 .process-orbit {
