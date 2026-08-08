@@ -35,7 +35,7 @@ export function FloatingContactButton() {
           <button className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setOpen(false)} aria-label="Закрыть окно" />
           <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="contact-sheet-title" className="absolute inset-x-0 bottom-0 rounded-t-[2rem] border-t border-white/15 bg-[#10141c] px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-5 shadow-2xl">
             <div className="flex items-center justify-between"><h2 id="contact-sheet-title" className="text-xl font-medium text-milk">Выберите мессенджер</h2><button ref={closeRef} onClick={() => setOpen(false)} className="grid size-10 place-items-center rounded-full border border-white/15 text-xl text-muted" aria-label="Закрыть">×</button></div>
-            <div className="mt-5 grid gap-3">{messengers.map((messenger) => <a key={messenger.name} href={messenger.href} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-milk"><span className="grid size-9 place-items-center rounded-full border border-cold/30 text-xs font-semibold text-cold">{messenger.short}</span>{messenger.name}</a>)}</div>
+            <div className="mt-5 grid gap-3">{messengers.map((messenger) => <a key={messenger.name} href={messenger.href} target="_blank" rel="noreferrer" aria-label={messenger.note} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-milk"><span className="grid size-9 place-items-center rounded-full border border-cold/30 text-xs font-semibold text-cold">{messenger.short}</span>{messenger.name}</a>)}</div>
           </div>
         </div>
       )}

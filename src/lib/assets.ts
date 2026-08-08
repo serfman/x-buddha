@@ -1,7 +1,17 @@
-export const sliderImages = Array.from(
-  { length: 10 },
-  (_, index) => `/seed_photos/slider${index + 1}.jpeg`,
-);
+import type { ImageAsset } from "@/types/content";
+
+export const sliderImages: ImageAsset[] = [
+  { src: "/seed_photos/slider1.jpeg", alt: "Позолоченная статуэтка буддийского защитника на льве" },
+  { src: "/seed_photos/slider2.jpeg", alt: "Позолоченная статуэтка бодхисаттвы с цветами лотоса" },
+  { src: "/seed_photos/slider3.jpeg", alt: "Позолоченная статуэтка сидящего Будды с чашей" },
+  { src: "/seed_photos/slider4.jpeg", alt: "Бронзовая статуэтка сидящего Будды в короне" },
+  { src: "/seed_photos/slider5.jpeg", alt: "Позолоченная буддийская ступа" },
+  { src: "/seed_photos/slider6.jpeg", alt: "Позолоченная четырёхрукая буддийская статуэтка" },
+  { src: "/seed_photos/slider7.jpeg", alt: "Позолоченная статуэтка буддийского защитника" },
+  { src: "/seed_photos/slider8.jpeg", alt: "Три миниатюрные буддийские статуэтки" },
+  { src: "/seed_photos/slider9.jpeg", alt: "Многорукая позолоченная статуэтка бодхисаттвы" },
+  { src: "/seed_photos/slider10.jpeg", alt: "Многорукая бронзовая статуэтка буддийского защитника" },
+];
 
 export const centerImage = "/seed_photos/center.jpeg";
 

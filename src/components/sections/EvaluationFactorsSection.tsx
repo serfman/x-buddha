@@ -93,7 +93,7 @@ export function EvaluationFactorsSection() {
           </div>
           <div className="evaluation-lab__specimen relative z-10 aspect-square w-full">
             <div className="absolute inset-[4%] rounded-full border border-cold/15 shadow-[0_0_80px_rgba(137,181,219,.1)]" />
-            <Image src={centerImage} alt="Центральная статуэтка для схемы факторов оценки" fill sizes="(max-width: 1200px) 46vw, 552px" className="artifact-specimen-image object-contain mix-blend-lighten" />
+            <Image src={centerImage} alt="Многофигурная бронзовая буддийская статуэтка" fill sizes="(max-width: 1200px) 46vw, 552px" className="artifact-specimen-image object-contain mix-blend-lighten" />
             <DesktopSpecimenOverlay />
           </div>
           <div className="z-30 grid grid-rows-3">
@@ -104,7 +104,7 @@ export function EvaluationFactorsSection() {
         <div className="mt-12 lg:hidden">
           <div className="evaluation-lab__specimen relative mx-auto aspect-square w-full max-w-[560px]">
             <div className="absolute inset-[6%] rounded-full border border-cold/15" />
-            <Image src={centerImage} alt="Статуэтка с маркерами факторов оценки" fill sizes="(max-width: 768px) 95vw, 560px" className="artifact-specimen-image object-contain mix-blend-lighten" />
+            <Image src={centerImage} alt="Многофигурная бронзовая буддийская статуэтка" fill sizes="(max-width: 768px) 95vw, 560px" className="artifact-specimen-image object-contain mix-blend-lighten" />
             <MobileMarkers />
           </div>
           <div className="mt-8 grid gap-x-8 gap-y-7 sm:grid-cols-2">

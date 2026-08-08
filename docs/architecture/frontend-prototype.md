@@ -155,7 +155,7 @@ src/data/evaluation-factors.ts
 В конфигурации должны храниться:
 
 - тексты секций;
-- ссылки Telegram, WhatsApp и MAX;
+- ссылки Telegram и MAX;
 - URL RuTube;
 - длительность слайда;
 - mock-статьи;

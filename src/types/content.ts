@@ -1,8 +1,13 @@
 export type Messenger = {
-  name: "Telegram" | "WhatsApp" | "MAX";
+  name: "Telegram" | "MAX";
   short: string;
   href: string;
   note: string;
+};
+
+export type ImageAsset = {
+  src: string;
+  alt: string;
 };
 
 export type Article = {
