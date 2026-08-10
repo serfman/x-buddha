@@ -324,3 +324,11 @@ Next.js Server Components + revalidation
 В параметре `location` передаётся одно из значений: `hero`, `how_to`, `final`, `mobile_sheet`, `blog`. До production нужно создать в интерфейсе Метрики JavaScript-цели с этими идентификаторами и выполнить проверку на реальном счётчике.
 
 Предзаполненный текст в текущие адресные ссылки не добавляется: Telegram-контакт задан ссылкой по номеру телефона, а MAX — ссылкой на профиль. Официальные share-ссылки обоих сервисов открывают выбор получателя, а не гарантированный диалог с указанным контактом; Telegram Business-ссылка клиентом не предоставлена. Поэтому обычные проверенные адресные ссылки сохраняются.
+
+## 17. Production runtime
+
+Production-версия работает на одном VPS в трёх контейнерах: standalone Next.js, Directus и PostgreSQL. Nginx на хосте завершает TLS и проксирует публичные домены к loopback-портам frontend и CMS; PostgreSQL доступен только во внутренней Docker network.
+
+Для Directus разделены адреса по назначению: `DIRECTUS_URL=https://admin.x-buddha.ru` формирует публичные URL файлов и image allow-list, а `DIRECTUS_INTERNAL_URL=http://directus:8055` используется только серверным data layer. При отсутствии внутренней переменной data layer сохраняет совместимый fallback на `DIRECTUS_URL`.
+
+Полная схема инфраструктуры, env, SSL, backup, deployment и rollback поддерживается только в корневом [DEPLOY.md](../../DEPLOY.md).

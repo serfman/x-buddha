@@ -1,0 +1,105 @@
+name: x-buddha-production
+
+x-service-defaults: &service-defaults
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  postgres:
+    <<: *service-defaults
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB in .env.production}
+      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER in .env.production}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.production}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - internal
+
+  directus:
+    <<: *service-defaults
+    image: directus/directus:11.17.4
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8055:8055"
+    volumes:
+      - directus_uploads:/directus/uploads
+      - ./directus/snapshots:/directus/snapshots:ro
+      - ./scripts:/directus/project-scripts:ro
+    environment:
+      KEY: ${DIRECTUS_KEY:?Set DIRECTUS_KEY in .env.production}
+      SECRET: ${DIRECTUS_SECRET:?Set DIRECTUS_SECRET in .env.production}
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:?Set DIRECTUS_ADMIN_EMAIL in .env.production}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:?Set DIRECTUS_ADMIN_PASSWORD in .env.production}
+      DB_CLIENT: pg
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_DATABASE: ${POSTGRES_DB:?Set POSTGRES_DB in .env.production}
+      DB_USER: ${POSTGRES_USER:?Set POSTGRES_USER in .env.production}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.production}
+      PUBLIC_URL: ${DIRECTUS_URL:-https://admin.x-buddha.ru}
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: https://x-buddha.ru,https://www.x-buddha.ru
+      WEBSOCKETS_ENABLED: "true"
+      TELEMETRY: "false"
+      DIRECTUS_URL: http://directus:8055
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8055/server/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    networks:
+      - internal
+
+  frontend:
+    <<: *service-defaults
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SITE_URL: ${SITE_URL:-https://x-buddha.ru}
+        DIRECTUS_URL: ${DIRECTUS_URL:-https://admin.x-buddha.ru}
+        NEXT_PUBLIC_ADMIN_URL: ${NEXT_PUBLIC_ADMIN_URL:-https://admin.x-buddha.ru}
+        NEXT_PUBLIC_YANDEX_METRIKA_ID: ${NEXT_PUBLIC_YANDEX_METRIKA_ID:-}
+    depends_on:
+      directus:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      SITE_URL: ${SITE_URL:-https://x-buddha.ru}
+      DIRECTUS_URL: ${DIRECTUS_URL:-https://admin.x-buddha.ru}
+      DIRECTUS_INTERNAL_URL: ${DIRECTUS_INTERNAL_URL:-http://directus:8055}
+      NEXT_PUBLIC_ADMIN_URL: ${NEXT_PUBLIC_ADMIN_URL:-https://admin.x-buddha.ru}
+      NEXT_PUBLIC_YANDEX_METRIKA_ID: ${NEXT_PUBLIC_YANDEX_METRIKA_ID:-}
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health/"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - internal
+
+volumes:
+  postgres_data:
+  directus_uploads:
+
+networks:
+  internal:
+    name: x-buddha-production-internal
+    driver: bridge

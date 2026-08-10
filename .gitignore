@@ -5,6 +5,7 @@ dist/
 out/
 .env*
 !.env.example
+!.env.production.example
 directus/database/
 directus/uploads/
 *.tar.gz

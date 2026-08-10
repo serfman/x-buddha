@@ -1,9 +1,9 @@
 const baseUrl = process.env.DIRECTUS_URL;
-const email = process.env.DIRECTUS_ADMIN_EMAIL;
-const password = process.env.DIRECTUS_ADMIN_PASSWORD;
+const email = process.env.DIRECTUS_ADMIN_EMAIL ?? process.env.ADMIN_EMAIL;
+const password = process.env.DIRECTUS_ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD;
 
 if (!baseUrl || !email || !password) {
-  throw new Error("Set DIRECTUS_URL, DIRECTUS_ADMIN_EMAIL and DIRECTUS_ADMIN_PASSWORD.");
+  throw new Error("Set DIRECTUS_URL and Directus admin email/password environment variables.");
 }
 
 const apiUrl = (path) => new URL(path.replace(/^\//, ""), baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);

@@ -1,5 +1,12 @@
 # История изменений
 
+## 2026-08-10 — задача 011
+
+- Подготовлен production Compose для standalone Next.js, Directus 11 и PostgreSQL с внутренней сетью, persistent volumes, healthchecks, restart policy и ограничением Docker logs.
+- Добавлены multi-stage Dockerfile, production env-шаблон и отдельный внутренний URL Directus для серверных CMS-запросов без утечки Docker hostname в публичные ссылки.
+- Подготовлены Nginx reverse proxy для основного и административного доменов, ACME bootstrap и процедура Let’s Encrypt/Certbot без выполнения реального deployment.
+- `DEPLOY.md` дополнен инструкциями по DNS, firewall, первому запуску, Directus schema/admin, backup/restore, обновлению, rollback и smoke-check; в P7 закрыта только production-конфигурация.
+
 ## 2026-08-08 — задача 010
 
 - В footer добавлен ненавязчивый доступный переход в штатную Directus Studio, открывающийся в новой вкладке с безопасными атрибутами.

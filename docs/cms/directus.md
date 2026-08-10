@@ -10,7 +10,7 @@
 4. Настроить минимальные публичные права: `npm run cms:configure-access`.
 5. Запустить frontend командой `npm run dev`.
 
-Для production задать те же переменные в секретах платформы. `DIRECTUS_URL` должен быть доступен серверу Next.js и указывать на публичный origin файлов Directus. Административные email/password используются только командами настройки и не нужны frontend во время работы.
+Production-развёртывание, PostgreSQL, применение snapshot, backup и первый admin описаны в корневом [DEPLOY.md](../../DEPLOY.md). Публичный `DIRECTUS_URL` формирует URL файлов, а серверные API-запросы внутри Docker используют `DIRECTUS_INTERNAL_URL`; административные credentials frontend во время работы не получает.
 
 ## Доступ к Directus Studio
 
