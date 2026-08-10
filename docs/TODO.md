@@ -4,9 +4,10 @@
 
 - [ ] Получить реальную ссылку RuTube.
 - [ ] Оптимизировать production-медиа.
-- [ ] Подготовить VPS и DNS для `x-buddha.ru`, `www.x-buddha.ru` и `admin.x-buddha.ru` по `DEPLOY.md`.
+- [ ] Выполнить отдельную задачу подготовки VPS по результатам [read-only аудита](audits/012-vps-readonly-audit-report.md): устранить конфликт порта `3000`, обеспечить запас RAM и установить Docker без нарушения LikeGallery.
+- [ ] Синхронизировать production-конфигурацию с доменами `xbuddha.org`, `www.xbuddha.org` и `admin.xbuddha.org`, затем отдельно настроить DNS и SSL.
 - [ ] Получить реальный ID Яндекс.Метрики, задать `NEXT_PUBLIC_YANDEX_METRIKA_ID` и создать цели для событий CTA.
-- [ ] Создать на VPS секретный `.env.production` по `.env.production.example` и настроить production environment.
+- [ ] После синхронизации доменов создать на VPS секретный `.env.production` по `.env.production.example` и настроить production environment.
 
 ## Следом
 
