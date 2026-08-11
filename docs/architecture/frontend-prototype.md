@@ -329,6 +329,6 @@ Next.js Server Components + revalidation
 
 Production-версия работает на одном VPS в трёх контейнерах: standalone Next.js, Directus и PostgreSQL. Nginx на хосте завершает TLS и проксирует публичные домены к loopback-портам frontend и CMS; PostgreSQL доступен только во внутренней Docker network.
 
-Для Directus разделены адреса по назначению: `DIRECTUS_URL=https://admin.x-buddha.ru` формирует публичные URL файлов и image allow-list, а `DIRECTUS_INTERNAL_URL=http://directus:8055` используется только серверным data layer. При отсутствии внутренней переменной data layer сохраняет совместимый fallback на `DIRECTUS_URL`.
+Для Directus разделены адреса по назначению: `DIRECTUS_URL=https://admin.xbuddha.org` формирует публичные URL файлов и image allow-list, а `DIRECTUS_INTERNAL_URL=http://directus:8055` используется только серверным data layer. При отсутствии внутренней переменной data layer сохраняет совместимый fallback на `DIRECTUS_URL`.
 
 Полная схема инфраструктуры, env, SSL, backup, deployment и rollback поддерживается только в корневом [DEPLOY.md](../../DEPLOY.md).

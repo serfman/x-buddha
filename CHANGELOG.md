@@ -1,5 +1,13 @@
 # История изменений
 
+## 2026-08-11 — задача 013
+
+- Подготовлен отдельный чистый production VPS `178.212.14.78`: установлены Docker Engine/Compose, host-level Nginx, Certbot и UFW, подключён постоянный swap 2 GiB.
+- Проверен и усилен SSH-доступ: key-based root login сохранён, password authentication и password-based root login отключены; firewall разрешает только SSH, HTTP и HTTPS.
+- Production-конфигурация синхронизирована с `xbuddha.org`, `www.xbuddha.org` и `admin.xbuddha.org`; старые `.ru`-домены удалены из действующих runtime- и deployment-файлов.
+- Репозиторий размещён в `/opt/x-buddha`, секретный production env создан с правами `600`, подготовлены persistent volumes, Directus schema/public policy, Nginx bootstrap и backup-каталог.
+- DNS и SSL намеренно не изменялись; публичный production deployment и финальный smoke-check остаются отдельной задачей.
+
 ## 2026-08-10 — задача 012
 
 - Выполнен строго read-only аудит production VPS `5.42.106.11`; SSH-доступ по подготовленному ключу подтверждён, состояние сервера не изменялось.

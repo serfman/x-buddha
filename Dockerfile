@@ -8,9 +8,9 @@ RUN npm ci
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-ARG SITE_URL=https://x-buddha.ru
-ARG DIRECTUS_URL=https://admin.x-buddha.ru
-ARG NEXT_PUBLIC_ADMIN_URL=https://admin.x-buddha.ru
+ARG SITE_URL=https://xbuddha.org
+ARG DIRECTUS_URL=https://admin.xbuddha.org
+ARG NEXT_PUBLIC_ADMIN_URL=https://admin.xbuddha.org
 ARG NEXT_PUBLIC_YANDEX_METRIKA_ID=
 
 ENV NODE_ENV=production \

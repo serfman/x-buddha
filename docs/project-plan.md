@@ -94,7 +94,7 @@ CMS и модель блога зафиксированы в [архитекту
 Результат: сайт опубликован и принят.
 
 - [x] Подготовить production-конфигурацию.
-- [ ] Настроить production environment.
+- [x] Настроить production environment.
 - [ ] Подключить домен.
 - [ ] Настроить SSL.
 - [ ] Выполнить production deployment.

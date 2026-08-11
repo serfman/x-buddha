@@ -4,10 +4,9 @@
 
 - [ ] Получить реальную ссылку RuTube.
 - [ ] Оптимизировать production-медиа.
-- [ ] Выполнить отдельную задачу подготовки VPS по результатам [read-only аудита](audits/012-vps-readonly-audit-report.md): устранить конфликт порта `3000`, обеспечить запас RAM и установить Docker без нарушения LikeGallery.
-- [ ] Синхронизировать production-конфигурацию с доменами `xbuddha.org`, `www.xbuddha.org` и `admin.xbuddha.org`, затем отдельно настроить DNS и SSL.
 - [ ] Получить реальный ID Яндекс.Метрики, задать `NEXT_PUBLIC_YANDEX_METRIKA_ID` и создать цели для событий CTA.
-- [ ] После синхронизации доменов создать на VPS секретный `.env.production` по `.env.production.example` и настроить production environment.
+- [ ] Переключить DNS на подготовленный VPS `178.212.14.78` отдельным контролируемым шагом: `@` и `admin` — A, `www` — CNAME на `xbuddha.org`.
+- [ ] После распространения DNS выпустить Let's Encrypt certificate, включить HTTPS Nginx-конфигурацию и выполнить production deployment со smoke-check.
 
 ## Следом
 
@@ -18,7 +17,7 @@
 ## Позже
 
 - [ ] Провести performance- и accessibility-аудит перед production.
-- [ ] Выполнить production deployment, SSL и smoke-check по `DEPLOY.md` отдельной задачей.
+- [ ] Выполнить финальную клиентскую приёмку после production smoke-check.
 
 ## Заблокировано
 

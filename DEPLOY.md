@@ -1,14 +1,15 @@
 # Production deployment X-Buddha
 
-Этот документ — единственная эксплуатационная инструкция для production-инфраструктуры X-Buddha. Конфигурация подготовлена для одного Ubuntu VPS, но реальный deployment, DNS и выпуск сертификатов выполняются отдельной задачей.
+Этот документ — единственная эксплуатационная инструкция для production-инфраструктуры X-Buddha. Отдельный VPS `178.212.14.78` подготовлен для одного production-стека; переключение DNS, публичный deployment и выпуск сертификатов выполняются отдельной задачей.
 
 ## Архитектура
 
 ```text
 Internet
   └─ Nginx на VPS :80/:443
-       ├─ x-buddha.ru, www.x-buddha.ru → 127.0.0.1:3000 → Next.js
-       └─ admin.x-buddha.ru            → 127.0.0.1:8055 → Directus
+       ├─ xbuddha.org                  → 127.0.0.1:3000 → Next.js
+       ├─ www.xbuddha.org              → 301 https://xbuddha.org
+       └─ admin.xbuddha.org            → 127.0.0.1:8055 → Directus
                                                             └─ postgres:5432
 ```
 
@@ -16,21 +17,29 @@ Internet
 
 Nginx и Certbot работают на хосте. Так первичный HTTP challenge не зависит от наличия сертификатов внутри Docker, а системный timer Certbot выполняет автоматическое продление.
 
+## Подготовленный VPS
+
+Production-каталог: `/opt/x-buddha` на отдельном VPS `178.212.14.78`. На хосте установлены Docker Engine, Compose plugin, Nginx, Certbot и UFW; Next.js, Directus и PostgreSQL остаются контейнерными сервисами. Секретный `/opt/x-buddha/.env.production` имеет права `600`.
+
+UFW разрешает входящие `22/tcp`, `80/tcp` и `443/tcp`. SSH принимает key-based access, password authentication отключена, root-доступ по ключу сохранён. Подключён постоянный swap `/swapfile` размером 2 GiB. Фактическое состояние подготовки зафиксировано в [отчёте задачи 013](docs/audits/013-vps-preparation-report.md).
+
+До переключения DNS на сервере используется только HTTP bootstrap-конфигурация Nginx: она обслуживает ACME challenge и возвращает `404` для остальных запросов. HTTPS-конфигурацию нельзя включать до появления сертификата.
+
 ## DNS
 
 До получения SSL создать у DNS-провайдера записи и дождаться их распространения:
 
 ```text
-A      @       <VPS_IP>
-A      admin   <VPS_IP>
-CNAME  www     x-buddha.ru
+A      @       178.212.14.78
+A      admin   178.212.14.78
+CNAME  www     xbuddha.org
 ```
 
-Реальный IP не хранить в Git. Если `www` не нужен, удалить его из DNS, команд Certbot, `CORS_ORIGIN` и Nginx-конфигурации одновременно.
+DNS в рамках подготовки VPS не переключается. После готовности сервера эти записи применяются отдельным контролируемым шагом. Если `www` не нужен, удалить его из DNS, команд Certbot, `CORS_ORIGIN` и Nginx-конфигурации одновременно.
 
 ## Базовая безопасность VPS
 
-- вход по SSH-ключу; после проверки ключа отключить password login и root login;
+- вход по SSH-ключу; после проверки отдельной сессией отключить password authentication и password-based root login, сохранив root-доступ по ключу;
 - актуальные OS packages, Docker Engine с Compose plugin, Nginx и Certbot;
 - во firewall открыть только `22/tcp`, `80/tcp`, `443/tcp`; SSH лучше ограничить доверенными адресами;
 - не открывать `3000`, `5432` и `8055`; убедиться, что cloud firewall Hostinger также не разрешает их;
@@ -66,7 +75,7 @@ openssl rand -hex 32
 - `NEXT_PUBLIC_ADMIN_URL` — публичная ссылка Directus Studio в footer;
 - `NEXT_PUBLIC_YANDEX_METRIKA_ID` — числовой ID реального счётчика, может оставаться пустым до его получения.
 
-`DIRECTUS_URL` и `NEXT_PUBLIC_ADMIN_URL` в production должны оставаться `https://admin.x-buddha.ru`; `directus:8055` допустим только в `DIRECTUS_INTERNAL_URL`.
+`DIRECTUS_URL` и `NEXT_PUBLIC_ADMIN_URL` в production должны оставаться `https://admin.xbuddha.org`; `directus:8055` допустим только в `DIRECTUS_INTERNAL_URL`.
 
 ## Первый deployment
 
@@ -81,6 +90,8 @@ docker compose --env-file .env.production -f docker-compose.production.yml build
 docker compose --env-file .env.production -f docker-compose.production.yml up -d
 docker compose --env-file .env.production -f docker-compose.production.yml ps
 ```
+
+На подготовленном VPS системные компоненты, репозиторий и env уже созданы. Эти команды остаются процедурой фактического deployment и обновления; DNS и SSL выполняются только после локального smoke-check стека.
 
 `npm ci` нужен для обязательных проверок и скрипта управления правами. Runtime frontend не содержит dev dependencies: Dockerfile копирует в финальный image только standalone Next.js output.
 
@@ -100,7 +111,7 @@ sudo systemctl reload nginx
 
 ```bash
 sudo certbot certonly --webroot -w /var/www/certbot \
-  -d x-buddha.ru -d www.x-buddha.ru -d admin.x-buddha.ru \
+  -d xbuddha.org -d www.xbuddha.org -d admin.xbuddha.org \
   --email <ADMIN_EMAIL> --agree-tos --no-eff-email
 ```
 
@@ -129,7 +140,7 @@ docker compose --env-file .env.production -f docker-compose.production.yml exec 
   node /directus/project-scripts/configure-directus-access.mjs
 ```
 
-На пустой БД Directus создаёт первого администратора из `DIRECTUS_ADMIN_EMAIL` и `DIRECTUS_ADMIN_PASSWORD`. Эти значения должны быть production-уникальными и не должны попадать в Git или логи. После первого входа в `https://admin.x-buddha.ru` сменить временный пароль, обновить секретный env-файл текущими credentials, проверить роль редактора и убедиться, что public policy не имеет доступа к Studio или draft-записям.
+На пустой БД Directus создаёт первого администратора из `DIRECTUS_ADMIN_EMAIL` и `DIRECTUS_ADMIN_PASSWORD`. Эти значения должны быть production-уникальными и не должны попадать в Git или логи. После первого входа в `https://admin.xbuddha.org` сменить временный пароль, обновить секретный env-файл текущими credentials, проверить роль редактора и убедиться, что public policy не имеет доступа к Studio или draft-записям.
 
 Подробный редакторский процесс остаётся в `docs/cms/directus.md`.
 
@@ -165,9 +176,9 @@ sudo ss -lntp | grep -E ':(3000|5432|8055)\b'
 Команда `port postgres 5432` не должна возвращать опубликованный адрес; `3000` и `8055` должны слушать только `127.0.0.1`. После SSL проверить извне:
 
 ```bash
-curl --fail --silent --show-error https://x-buddha.ru/api/health/
-curl --fail --silent --show-error https://admin.x-buddha.ru/server/health
-curl --head https://www.x-buddha.ru
+curl --fail --silent --show-error https://xbuddha.org/api/health/
+curl --fail --silent --show-error https://admin.xbuddha.org/server/health
+curl --head https://www.xbuddha.org
 ```
 
 В браузере проверить главную, `/blog`, опубликованную статью, загрузку Directus image, вход в Studio и CTA Telegram/MAX на desktop/mobile. Проверка persistence в окно обслуживания: записать тестовую draft-статью и файл, выполнить `docker compose ... down`, затем `docker compose ... up -d` без `--volumes` и убедиться, что оба объекта сохранены; после проверки удалить только тестовые объекты через Studio.
