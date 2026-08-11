@@ -79,21 +79,26 @@ openssl rand -hex 32
 
 ## Первый deployment
 
-Установить Docker Engine/Compose, Nginx и Certbot из поддерживаемых репозиториев ОС или Docker, клонировать репозиторий в постоянный каталог и подготовить `.env.production`. Затем из корня проекта:
+Установить Docker Engine/Compose, Nginx и Certbot из поддерживаемых репозиториев ОС или Docker, клонировать репозиторий в постоянный каталог и подготовить `.env.production`. До подключения к VPS выполнить обязательные проверки в рабочем окружении с Node.js:
 
 ```bash
 npm ci
 npm run lint
 npm run build
+```
+
+Затем из корня проекта на VPS:
+
+```bash
 docker compose --env-file .env.production -f docker-compose.production.yml config --quiet
 docker compose --env-file .env.production -f docker-compose.production.yml build
 docker compose --env-file .env.production -f docker-compose.production.yml up -d
 docker compose --env-file .env.production -f docker-compose.production.yml ps
 ```
 
-На подготовленном VPS системные компоненты, репозиторий и env уже созданы. Эти команды остаются процедурой фактического deployment и обновления; DNS и SSL выполняются только после локального smoke-check стека.
+На подготовленном VPS системные компоненты, репозиторий и env уже созданы. Node.js на production-хосте не требуется: `npm ci` и production build выполняются внутри multi-stage Dockerfile. DNS и SSL включаются только после localhost smoke-check стека.
 
-`npm ci` нужен для обязательных проверок и скрипта управления правами. Runtime frontend не содержит dev dependencies: Dockerfile копирует в финальный image только standalone Next.js output.
+Runtime frontend не содержит dev dependencies: Dockerfile копирует в финальный image только standalone Next.js output. Скрипт public access Directus запускается внутри CMS-контейнера.
 
 ### Первый SSL-сертификат
 
@@ -158,14 +163,13 @@ docker compose --env-file .env.production -f docker-compose.production.yml exec 
 
 ```bash
 git pull --ff-only origin main
-npm ci
-npm run lint
-npm run build
 docker compose --env-file .env.production -f docker-compose.production.yml config --quiet
 docker compose --env-file .env.production -f docker-compose.production.yml build
 docker compose --env-file .env.production -f docker-compose.production.yml up -d --remove-orphans
 docker compose --env-file .env.production -f docker-compose.production.yml ps
 ```
+
+`npm run lint` и `npm run build` должны быть успешно выполнены в рабочем окружении до `git push`; production Docker build повторно проверяет TypeScript и Next.js build.
 
 Если snapshot Directus изменился, после backup применить его отдельной командой из предыдущего раздела. `docker compose down` без `--volumes` безопасен для persistent data, но для обычного обновления не требуется.
 
