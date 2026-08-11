@@ -73,7 +73,9 @@ openssl rand -hex 32
 - `DIRECTUS_URL` — публичный HTTPS origin API и файлов, используемый в браузерных URL;
 - `DIRECTUS_INTERNAL_URL` — адрес API внутри Docker network для серверных запросов Next.js;
 - `NEXT_PUBLIC_ADMIN_URL` — публичная ссылка Directus Studio в footer;
-- `NEXT_PUBLIC_YANDEX_METRIKA_ID` — числовой ID реального счётчика, может оставаться пустым до его получения; даже при заданном ID frontend загружает Метрику только после согласия пользователя.
+- `NEXT_PUBLIC_YANDEX_METRIKA_ID` — production ID счётчика `111463994`; frontend загружает Метрику только после согласия пользователя.
+
+В интерфейсе счётчика `111463994` вручную создать две цели типа «Целевое событие». Для каждой выбрать условие «совпадает» и указать идентификатор `messenger_telegram_click` либо `messenger_max_click`. Frontend уже вызывает `reachGoal` с этими идентификаторами во всех основных CTA и передаёт параметр `location`.
 
 `DIRECTUS_URL` и `NEXT_PUBLIC_ADMIN_URL` в production должны оставаться `https://admin.xbuddha.org`; `directus:8055` допустим только в `DIRECTUS_INTERNAL_URL`.
 
@@ -193,7 +195,7 @@ curl --fail --silent --show-error https://admin.xbuddha.org/server/health
 curl --head https://www.xbuddha.org
 ```
 
-В браузере проверить главную, `/blog`, опубликованную статью, `/privacy`, `/offer`, загрузку Directus image, вход в Studio и CTA Telegram/MAX на desktop/mobile. Для consent проверить нового пользователя, принятие и отказ, сохранение выбора после reload и отсутствие запросов Метрики до согласия. Проверка persistence в окно обслуживания: записать тестовую draft-статью и файл, выполнить `docker compose ... down`, затем `docker compose ... up -d` без `--volumes` и убедиться, что оба объекта сохранены; после проверки удалить только тестовые объекты через Studio.
+В браузере проверить главную, `/blog`, опубликованную статью, `/privacy`, штатный 404 на `/offer`, загрузку Directus image, вход в Studio и CTA Telegram/MAX на desktop/mobile; ссылки на `/offer` в интерфейсе быть не должно. Для consent проверить нового пользователя, принятие и отказ, сохранение выбора после reload и отсутствие запросов Метрики до согласия. После согласия проверить загрузку счётчика `111463994`, отсутствие повторной инициализации и отправку `messenger_telegram_click`/`messenger_max_click`. Проверка persistence в окно обслуживания: записать тестовую draft-статью и файл, выполнить `docker compose ... down`, затем `docker compose ... up -d` без `--volumes` и убедиться, что оба объекта сохранены; после проверки удалить только тестовые объекты через Studio.
 
 ## Логи и управление сервисами
 

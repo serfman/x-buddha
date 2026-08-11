@@ -42,7 +42,6 @@ export function FinalSection() {
             <Logo light />
             <nav className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/65" aria-label="Ссылки в подвале">
               <Link href="/blog">Статьи</Link>
-              <Link href="/offer">Публичная оферта</Link>
               <Link href="/privacy">Политика конфиденциальности</Link>
               {adminUrl ? (
                 <a
