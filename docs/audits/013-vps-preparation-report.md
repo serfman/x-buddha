@@ -30,6 +30,17 @@ Host-level Nginx принимает публичный HTTP/HTTPS-трафик. 
 
 До переключения DNS применяется только bootstrap server block Nginx для ACME challenge. Запросы к остальным путям получают `404`; HTTPS server blocks пока не включаются.
 
+## Проверки стека
+
+- `docker compose config --quiet` и production build выполнены непосредственно на VPS.
+- PostgreSQL, Directus и frontend запущены и достигли `healthy`; localhost health endpoints возвращают `status: ok`.
+- Snapshot `articles` применён, admin login проверен скриптом настройки, public policy ограничена published-статьями и image assets.
+- После restart Compose все сервисы снова достигли `healthy`, коллекция и public permissions сохранились.
+- Next.js слушает только `127.0.0.1:3000`, Directus — только `127.0.0.1:8055`; у PostgreSQL отсутствует host port binding.
+- Для всех трёх сервисов подтверждена restart policy `unless-stopped`.
+- Nginx bootstrap прошёл `nginx -t`, тестовый ACME challenge доступен по HTTP, прочие запросы получают `404`.
+- Созданы согласованные PostgreSQL/uploads backup-архивы. PostgreSQL dump успешно восстановлен в отдельную временную БД, структура `articles` проверена, временная БД удалена; uploads archive прошёл проверку целостности.
+
 ## Оставшиеся блокеры
 
 - DNS у Hostinger не переключён. Нужны A-записи `@` и `admin` на `178.212.14.78`, CNAME `www` на `xbuddha.org`.
