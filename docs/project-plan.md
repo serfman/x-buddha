@@ -95,7 +95,7 @@ CMS и модель блога зафиксированы в [архитекту
 
 - [x] Подготовить production-конфигурацию.
 - [x] Настроить production environment.
-- [ ] Подключить домен.
+- [x] Подключить домен.
 - [ ] Настроить SSL.
 - [ ] Выполнить production deployment.
 - [ ] Выполнить production smoke-check.

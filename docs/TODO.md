@@ -5,8 +5,7 @@
 - [ ] Получить реальную ссылку RuTube.
 - [ ] Оптимизировать production-медиа.
 - [ ] Получить реальный ID Яндекс.Метрики, задать `NEXT_PUBLIC_YANDEX_METRIKA_ID` и создать цели для событий CTA.
-- [ ] Подтвердить в Hostinger фактические DNS-записи и стабильное распространение: публичные резолверы уже показывают `@` и `admin` на `178.212.14.78`, `www` — CNAME на `xbuddha.org`.
-- [ ] После распространения DNS выпустить Let's Encrypt certificate, включить HTTPS Nginx-конфигурацию и выполнить production deployment со smoke-check.
+- [ ] В отдельной deployment-задаче выпустить Let's Encrypt certificate, включить HTTPS Nginx-конфигурацию и выполнить production deployment со smoke-check.
 
 ## Следом
 
