@@ -1,5 +1,13 @@
 # История изменений
 
+## 2026-08-11 — задача 014
+
+- Выполнен первый технический production deployment: `xbuddha.org` и Directus опубликованы через host-level Nginx на подготовленном VPS.
+- Выпущен единый сертификат Let's Encrypt для основного, `www` и admin-домена; настроены canonical redirects, deploy hook и проверено автоматическое renewal.
+- Подтверждены authentication/schema/public policy/uploads Directus и сохранность PostgreSQL, admin user, schema и uploads после контролируемого restart контейнеров.
+- Пройдены production smoke-check маршрутов, SEO, CTA, responsive-композиций и внешней поверхности портов; добавлен favicon и устранена лишняя redirect-цепочка `http://www`.
+- Зафиксированы свежие backup PostgreSQL/uploads и rollback point; незавершённые P2, P5, P6 и клиентская приёмка оставлены открытыми.
+
 ## 2026-08-11 — задача 013
 
 - Подготовлен отдельный чистый production VPS `178.212.14.78`: установлены Docker Engine/Compose, host-level Nginx, Certbot и UFW, подключён постоянный swap 2 GiB.

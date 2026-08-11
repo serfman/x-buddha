@@ -1,6 +1,6 @@
 # Production deployment X-Buddha
 
-Этот документ — единственная эксплуатационная инструкция для production-инфраструктуры X-Buddha. Отдельный VPS `178.212.14.78` подготовлен для одного production-стека; контроль DNS, публичный deployment и выпуск сертификатов выполняются отдельной задачей.
+Этот документ — единственная эксплуатационная инструкция для production-инфраструктуры X-Buddha. Production-стек опубликован 11 августа 2026 года на отдельном VPS `178.212.14.78`; результаты первого deployment и smoke-check зафиксированы в [отчёте задачи 014](docs/audits/014-production-deployment-report.md).
 
 ## Архитектура
 
@@ -23,7 +23,7 @@ Production-каталог: `/opt/x-buddha` на отдельном VPS `178.212.
 
 UFW разрешает входящие `22/tcp`, `80/tcp` и `443/tcp`. SSH принимает key-based access, password authentication отключена, root-доступ по ключу сохранён. Подключён постоянный swap `/swapfile` размером 2 GiB. Фактическое состояние подготовки зафиксировано в [отчёте задачи 013](docs/audits/013-vps-preparation-report.md).
 
-До выпуска SSL на сервере используется только HTTP bootstrap-конфигурация Nginx: она обслуживает ACME challenge и возвращает `404` для остальных запросов. HTTPS-конфигурацию нельзя включать до появления сертификата.
+На сервере активна HTTPS-конфигурация Nginx. Единый сертификат Let's Encrypt покрывает `xbuddha.org`, `www.xbuddha.org` и `admin.xbuddha.org`; renewal выполняет системный timer Certbot, а deploy hook проверяет и перезагружает Nginx после успешного обновления.
 
 ## DNS
 
@@ -118,6 +118,12 @@ sudo certbot certonly --webroot -w /var/www/certbot \
 После успешного выпуска включить HTTPS reverse proxy:
 
 ```bash
+sudo install -m 644 \
+  /usr/lib/python3/dist-packages/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf \
+  /etc/letsencrypt/options-ssl-nginx.conf
+sudo install -m 644 \
+  /usr/lib/python3/dist-packages/certbot/ssl-dhparams.pem \
+  /etc/letsencrypt/ssl-dhparams.pem
 sudo cp nginx/x-buddha.conf /etc/nginx/sites-available/x-buddha
 sudo nginx -t
 sudo systemctl reload nginx
@@ -126,6 +132,8 @@ sudo chmod 755 /etc/letsencrypt/renewal-hooks/deploy/reload-nginx.sh
 sudo systemctl enable --now certbot.timer
 sudo certbot renew --dry-run
 ```
+
+Пути к TLS-шаблонам выше соответствуют пакетам Certbot Ubuntu 26.04. Если пакетная структура изменится, сначала найти файлы через `dpkg -L python3-certbot-nginx` и `dpkg -L python3-certbot`; не выполнять reload, пока `nginx -t` не завершится успешно.
 
 Конфигурация перенаправляет HTTP на HTTPS, `www` на основной домен, передаёт Host/real IP/forwarded headers и Upgrade для WebSocket. Gzip включён; Brotli можно включить только при наличии поддерживаемого Nginx-модуля.
 
