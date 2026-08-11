@@ -6,7 +6,7 @@
 - Проверен и усилен SSH-доступ: key-based root login сохранён, password authentication и password-based root login отключены; firewall разрешает только SSH, HTTP и HTTPS.
 - Production-конфигурация синхронизирована с `xbuddha.org`, `www.xbuddha.org` и `admin.xbuddha.org`; старые `.ru`-домены удалены из действующих runtime- и deployment-файлов.
 - Репозиторий размещён в `/opt/x-buddha`, секретный production env создан с правами `600`, подготовлены persistent volumes, Directus schema/public policy, Nginx bootstrap и backup-каталог.
-- DNS и SSL намеренно не изменялись; публичный production deployment и финальный smoke-check остаются отдельной задачей.
+- DNS и SSL намеренно не изменялись; при финальной проверке публичные DNS-резолверы уже показывали целевой VPS вследствие внешнего изменения. Выпуск SSL, production deployment и финальный smoke-check остаются отдельной задачей.
 
 ## 2026-08-10 — задача 012
 

@@ -28,7 +28,7 @@
 
 Host-level Nginx принимает публичный HTTP/HTTPS-трафик. Next.js публикуется только на `127.0.0.1:3000`, Directus — только на `127.0.0.1:8055`, PostgreSQL не публикует host port и доступен только в Docker network. PostgreSQL data и Directus uploads используют именованные persistent volumes.
 
-До переключения DNS применяется только bootstrap server block Nginx для ACME challenge. Запросы к остальным путям получают `404`; HTTPS server blocks пока не включаются.
+До выпуска SSL применяется только bootstrap server block Nginx для ACME challenge. Запросы к остальным путям получают `404`; HTTPS server blocks пока не включаются.
 
 ## Проверки стека
 
@@ -41,10 +41,14 @@ Host-level Nginx принимает публичный HTTP/HTTPS-трафик. 
 - Nginx bootstrap прошёл `nginx -t`, тестовый ACME challenge доступен по HTTP, прочие запросы получают `404`.
 - Созданы согласованные PostgreSQL/uploads backup-архивы. PostgreSQL dump успешно восстановлен в отдельную временную БД, структура `articles` проверена, временная БД удалена; uploads archive прошёл проверку целостности.
 
+## Внешнее состояние DNS
+
+Задача не выполняла изменений в Hostinger. При финальной проверке Cloudflare DNS и Google Public DNS уже возвращали A-записи `xbuddha.org` и `admin.xbuddha.org` на `178.212.14.78`, а `www.xbuddha.org` — CNAME на `xbuddha.org`. Это внешнее изменение произошло вне действий задачи 013. До SSL нужно подтвердить записи в панели Hostinger и их стабильное распространение.
+
 ## Оставшиеся блокеры
 
-- DNS у Hostinger не переключён. Нужны A-записи `@` и `admin` на `178.212.14.78`, CNAME `www` на `xbuddha.org`.
-- Сертификат Let's Encrypt не выпускался до готовности DNS.
+- DNS-записи нужно подтвердить в Hostinger; публичные резолверы уже показывают целевые значения.
+- Сертификат Let's Encrypt намеренно не выпускался в рамках задачи подготовки.
 - Реальный ID Яндекс.Метрики не предоставлен; переменная остаётся пустой.
 - Реальный RuTube URL и финальные юридические тексты ожидаются от заказчика.
 - Публичный production deployment, внешний smoke-check и клиентская приёмка не объявлены завершёнными.
