@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { getYandexMetrikaId } from "@/lib/analytics";
@@ -9,9 +9,13 @@ export function YandexMetrika() {
   const pathname = usePathname();
   const counterId = getYandexMetrikaId();
   const [ready, setReady] = useState(false);
+  const trackedPathname = useRef(pathname);
 
   useEffect(() => {
     if (!counterId || !ready || !window.ym) return;
+    if (trackedPathname.current === pathname) return;
+
+    trackedPathname.current = pathname;
     window.ym(counterId, "hit", window.location.href, { title: document.title });
   }, [counterId, pathname, ready]);
 
@@ -29,14 +33,6 @@ export function YandexMetrika() {
       <Script id="yandex-metrika" strategy="afterInteractive" onReady={() => setReady(true)}>
         {initialization}
       </Script>
-      <noscript>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={`https://mc.yandex.ru/watch/${counterId}`}
-          className="absolute -left-[9999px]"
-          alt=""
-        />
-      </noscript>
     </>
   );
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { FloatingContactButton } from "@/components/contacts/FloatingContactButton";
-import { YandexMetrika } from "@/components/analytics/YandexMetrika";
+import { AnalyticsConsent } from "@/components/analytics/AnalyticsConsent";
 import { DEFAULT_OG_IMAGE, HOME_DESCRIPTION, HOME_TITLE, SITE_NAME, getSiteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -26,5 +26,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="ru"><body><Header />{children}<FloatingContactButton /><YandexMetrika /></body></html>;
+  return <html lang="ru"><body><Header />{children}<FloatingContactButton /><AnalyticsConsent /></body></html>;
 }
