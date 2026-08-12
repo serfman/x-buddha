@@ -25,9 +25,15 @@ export function HeroSection() {
               <p key={benefit.title} className="text-sm leading-6 text-muted"><strong className="font-medium text-milk">{benefit.title}:</strong> {benefit.text}</p>
             ))}
           </div>
-          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col items-start gap-4 lg:flex-row lg:items-center">
             <ScrollLink href="#contact" className="hidden rounded-full bg-milk px-6 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(190,220,255,.2)] lg:block">Оценить предмет</ScrollLink>
-            <MessengerButtons compact location="hero" />
+            <div>
+              <p className="mb-3 flex items-center gap-2 text-sm font-medium text-milk lg:hidden">
+                Оценить предмет
+                <span className="text-cold" aria-hidden="true">↓</span>
+              </p>
+              <MessengerButtons compact location="hero" />
+            </div>
           </div>
         </div>
         <StatueSlider images={sliderImages} />
