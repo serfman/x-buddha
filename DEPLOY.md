@@ -17,7 +17,7 @@ Internet
 
 Nginx и Certbot работают на хосте. Так первичный HTTP challenge не зависит от наличия сертификатов внутри Docker, а системный timer Certbot выполняет автоматическое продление.
 
-HTTPS-конфигурация добавляет HSTS, `X-Content-Type-Options`, `Referrer-Policy` и ограничение неиспользуемых browser permissions; frontend дополнительно запрещает встраивание через `X-Frame-Options: SAMEORIGIN`. Nginx скрывает upstream `X-Powered-By` и точную версию server token. После изменения `nginx/x-buddha.conf` обязательно выполнить `nginx -t` до reload.
+HTTPS-конфигурация добавляет HSTS, `X-Content-Type-Options`, `Referrer-Policy` и ограничение неиспользуемых browser permissions; frontend дополнительно запрещает встраивание через `X-Frame-Options: SAMEORIGIN`. Nginx скрывает upstream `X-Powered-By`; точная версия server token отключена глобальной настройкой VPS. После изменения `nginx/x-buddha.conf` обязательно выполнить `nginx -t` до reload.
 
 ## Подготовленный VPS
 
