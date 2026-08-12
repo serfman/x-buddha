@@ -51,3 +51,24 @@
 ## Итог по P6
 
 Финальная оптимизация изображений и шрифтов, Core Web Vitals, accessibility, desktop/mobile и исправление существенных дефектов выполнены. Cross-browser work item остаётся открытым до отдельной проверки Safari/Firefox.
+
+## Follow-up задачи 019 — финальная визуальная полировка
+
+Дата проверки: 12 августа 2026 года.
+
+- В едином Hero H1 восстановлен утверждённый акцент «буддийских статуэток»: акцентная строка использует самостоятельный responsive `clamp()`, заметно крупнее соседних строк и сохраняет качественные переносы на 360, 390, 768, 1024 и 1440 px.
+- Основные уровни Display, H1, H2, H3, Body, Small и Eyebrow унифицированы в существующей типографической системе без замены self-hosted Manrope и без новых декоративных шрифтов.
+- Видеосекция поднята композиционно, технический eyebrow заменён на «Экспертный разбор», добавлены смысловой заголовок и короткий контекст. До взаимодействия показывается настоящий RuTube thumbnail 640×360; он хранится локально и выводится через `next/image`.
+- Lazy embed сохранён: до Play iframe отсутствует, после действия создаётся один официальный `https://rutube.ru/play/embed/…/`; frame остаётся 16:9 без CLS и horizontal overflow.
+- Локальный финальный build проверен в Safari 26.5 и Firefox 147.0.1 на desktop/mobile. Проверены главная, Hero/slider, атрибуция, preview/Play, CTA, consent, финальная секция/footer, `/blog`, production-статья и `/privacy`; browser-specific Critical/High-дефекты не обнаружены.
+- Существующая production-статья `/blog/buddhist-sculpture-attribution/` подтверждена в списке блога; проверены title/excerpt, rich content/headings, cover, SEO title/description, canonical, Open Graph и `BlogPosting` JSON-LD. Контент и CMS schema не изменялись.
+- Production Docker build, smoke-check и итоговые Lighthouse показатели зафиксированы ниже после deployment задачи 019.
+
+Итоговые Lighthouse показатели задачи 019:
+
+| Режим | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Mobile | — | — | — | — | — | — | — |
+| Desktop | — | — | — | — | — | — | — |
+
+После завершения production-проверки P6 закрыт: выполнены все восемь из восьми work items.

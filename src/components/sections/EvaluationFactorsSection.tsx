@@ -8,9 +8,9 @@ import type { EvaluationFactor } from "@/types/content";
 function FactorCopy({ factor, desktop = false }: { factor: EvaluationFactor; desktop?: boolean }) {
   return (
     <div className={`relative ${desktop ? `evaluation-factor-copy evaluation-factor-copy--${factor.side}` : ""}`}>
-      <span className="text-xs tracking-[.2em] text-cold">{factor.number}</span>
-      <h3 className="mt-1 text-lg font-medium text-milk">{factor.title}</h3>
-      <p className="mt-1.5 text-sm leading-6 text-muted">{factor.description}</p>
+      <span className="type-small tracking-[.2em] text-cold">{factor.number}</span>
+      <h3 className="type-h3 mt-1 text-milk">{factor.title}</h3>
+      <p className="type-small mt-1.5 leading-6 text-muted">{factor.description}</p>
     </div>
   );
 }

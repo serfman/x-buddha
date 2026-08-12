@@ -59,7 +59,7 @@ export default function Home() {
       <EvaluationFactorsSection />
       <EvaluationProcessSection />
       <div className="final-journey">
-        <VideoSection url={site.rutubeUrl} />
+        <VideoSection video={site.video} />
         <FinalSection />
       </div>
     </main>

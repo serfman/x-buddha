@@ -1,7 +1,11 @@
 export const site = {
   name: "X-BUDDHA",
-  label: "X-Buddha — экспертный центр",
-  title: "Оценка и атрибуция буддийских статуэток и артефактов",
+  label: "X-Buddha – экспертный центр",
+  title: {
+    lead: "Оценка и атрибуция",
+    accent: "буддийских статуэток",
+    tail: "и артефактов",
+  },
   description: "Будды, атрибутика и артефакты буддизма.",
   services: "Оценка, выкуп, атрибуция, экспертиза, размещение на аукционе.",
   benefits: [
@@ -26,5 +30,12 @@ export const site = {
     cta: "Пишите в сообщения прямо сейчас!",
   },
   slideDuration: 6000,
-  rutubeUrl: "https://rutube.ru/video/2c3be6ec126a5bbb56fe377f14346461/",
+  video: {
+    eyebrow: "Экспертный разбор",
+    title: "Как проходит оценка буддийских предметов",
+    description: "Показываем, на какие детали бронзового предмета обращает внимание эксперт при первичном изучении.",
+    url: "https://rutube.ru/video/2c3be6ec126a5bbb56fe377f14346461/",
+    poster: "/video/rutube-x-buddha-preview.jpg",
+    posterAlt: "Эксперт изучает основание буддийской статуэтки через увеличительное стекло",
+  },
 } as const;

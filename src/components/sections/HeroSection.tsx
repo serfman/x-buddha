@@ -13,9 +13,13 @@ export function HeroSection() {
       <Container className="relative grid items-center gap-12 lg:grid-cols-[.86fr_1.14fr] lg:gap-8 xl:gap-14">
         <div className="z-10 max-w-2xl">
           <p className="eyebrow">{site.label}</p>
-          <h1 id="hero-title" className="mt-5 text-balance text-[clamp(2.5rem,5vw,5.15rem)] font-medium leading-[.98] tracking-[-0.055em] text-milk">{site.title}</h1>
-          <p className="mt-6 text-lg text-milk/90 sm:text-xl">{site.description}</p>
-          <p className="mt-2 max-w-xl text-base leading-7 text-muted">{site.services}</p>
+          <h1 id="hero-title" className="type-h1 mt-5 text-balance">
+            <span className="block text-milk/75">{site.title.lead}</span>{" "}
+            <span className="hero-title-accent block">{site.title.accent}</span>{" "}
+            <span className="block text-milk">{site.title.tail}</span>
+          </h1>
+          <p className="type-display mt-6 text-milk/90">{site.description}</p>
+          <p className="type-body mt-2 max-w-xl text-muted">{site.services}</p>
           <div className="mt-7 grid gap-3 border-l border-cold/25 pl-5 sm:grid-cols-3 sm:border-l-0 sm:border-t sm:pl-0 sm:pt-5">
             {site.benefits.map((benefit) => (
               <p key={benefit.title} className="text-sm leading-6 text-muted"><strong className="font-medium text-milk">{benefit.title}:</strong> {benefit.text}</p>
