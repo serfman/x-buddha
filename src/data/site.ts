@@ -26,5 +26,5 @@ export const site = {
     cta: "Пишите в сообщения прямо сейчас!",
   },
   slideDuration: 6000,
-  rutubeUrl: "",
+  rutubeUrl: "https://rutube.ru/video/2c3be6ec126a5bbb56fe377f14346461/",
 } as const;

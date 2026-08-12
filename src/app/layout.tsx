@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { FloatingContactButton } from "@/components/contacts/FloatingContactButton";
 import { AnalyticsConsent } from "@/components/analytics/AnalyticsConsent";
 import { DEFAULT_OG_IMAGE, HOME_DESCRIPTION, HOME_TITLE, SITE_NAME, getSiteUrl } from "@/lib/seo";
+
+const manrope = Manrope({
+  subsets: ["cyrillic", "latin"],
+  display: "swap",
+  variable: "--font-manrope",
+});
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
@@ -26,5 +33,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="ru"><body><Header />{children}<FloatingContactButton /><AnalyticsConsent /></body></html>;
+  return <html lang="ru"><body className={manrope.variable}><Header />{children}<FloatingContactButton /><AnalyticsConsent /></body></html>;
 }

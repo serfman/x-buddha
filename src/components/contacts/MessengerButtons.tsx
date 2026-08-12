@@ -12,9 +12,9 @@ export function MessengerButtons({ compact = false, dark = false, prominent = fa
           href={messenger.href}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={messenger.note}
+          title={messenger.note}
           onClick={() => trackMessengerClick(messenger.name, location)}
-          className={`group inline-flex items-center justify-center gap-2 rounded-full border text-sm transition duration-300 hover:-translate-y-0.5 ${
+          className={`group inline-flex min-h-11 items-center justify-center gap-2 rounded-full border text-sm transition duration-300 hover:-translate-y-0.5 ${
             prominent
               ? messenger.name === "Telegram"
                 ? "min-h-14 border-milk bg-milk px-7 py-3.5 font-semibold text-ink shadow-[0_12px_38px_rgba(191,213,231,.16)] hover:shadow-[0_16px_44px_rgba(191,213,231,.24)]"

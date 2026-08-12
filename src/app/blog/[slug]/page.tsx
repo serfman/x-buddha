@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const socialImageUrl = socialImage ? getDirectusAssetUrl(socialImage.id) : DEFAULT_OG_IMAGE.url;
     const canonicalUrl = getCanonicalUrl(`/blog/${encodeURIComponent(article.slug)}/`);
     return {
-      title,
+      title: { absolute: title },
       description,
       alternates: { canonical: canonicalUrl },
       openGraph: {

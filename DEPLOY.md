@@ -17,6 +17,8 @@ Internet
 
 Nginx и Certbot работают на хосте. Так первичный HTTP challenge не зависит от наличия сертификатов внутри Docker, а системный timer Certbot выполняет автоматическое продление.
 
+HTTPS-конфигурация добавляет HSTS, `X-Content-Type-Options`, `Referrer-Policy` и ограничение неиспользуемых browser permissions; frontend дополнительно запрещает встраивание через `X-Frame-Options: SAMEORIGIN`. Nginx скрывает upstream `X-Powered-By` и точную версию server token. После изменения `nginx/x-buddha.conf` обязательно выполнить `nginx -t` до reload.
+
 ## Подготовленный VPS
 
 Production-каталог: `/opt/x-buddha` на отдельном VPS `178.212.14.78`. На хосте установлены Docker Engine, Compose plugin, Nginx, Certbot и UFW; Next.js, Directus и PostgreSQL остаются контейнерными сервисами. Секретный `/opt/x-buddha/.env.production` имеет права `600`.

@@ -1,5 +1,13 @@
 # История изменений
 
+## 2026-08-12 — задача 018
+
+- Реальный RuTube URL подключён через валидируемый lazy embed; обычная страница видео больше не передаётся напрямую в iframe.
+- Проведены production functional, responsive, CMS, SEO, analytics/consent, security и infrastructure QA; Critical/High-дефекты не обнаружены, результаты зафиксированы в `docs/audits/018-production-qa-report.md`.
+- Исправлены дублирование бренда в title статьи, accessible names и touch targets CTA/footer; подключён self-hosted Manrope через `next/font`.
+- Оптимизированы responsive image widths и Himalayas source (2,5 MiB → 0,91 MiB); добавлены базовые security headers и скрытие application server headers.
+- P2 завершён; в P6 закрыты семь из восьми work items, отдельная ручная проверка Safari/Firefox оставлена открытой.
+
 ## 2026-08-11 — задача 017
 
 - Production ID Яндекс.Метрики зафиксирован как `111463994`; сохранена загрузка счётчика только после согласия и существующие события Telegram/MAX во всех основных CTA.
