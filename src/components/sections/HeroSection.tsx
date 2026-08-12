@@ -26,7 +26,7 @@ export function HeroSection() {
             ))}
           </div>
           <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-            <ScrollLink href="#contact" className="rounded-full bg-milk px-6 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(190,220,255,.2)]">Оценить предмет</ScrollLink>
+            <ScrollLink href="#contact" className="hidden rounded-full bg-milk px-6 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(190,220,255,.2)] lg:block">Оценить предмет</ScrollLink>
             <MessengerButtons compact location="hero" />
           </div>
         </div>
