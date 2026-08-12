@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { BlogCard } from "@/components/blog/BlogCard";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { getPublishedArticles } from "@/lib/directus/articles";
 import { DEFAULT_OG_IMAGE, getCanonicalUrl } from "@/lib/seo";
 import type { Article } from "@/types/content";
@@ -30,8 +31,9 @@ export default async function BlogPage() {
   }
 
   return (
-    <main className="min-h-screen pb-24 pt-32 sm:pt-40">
-      <Container>
+    <>
+      <main className="min-h-screen pb-24 pt-32 sm:pt-40">
+        <Container>
         <p className="eyebrow">База знаний</p>
         <h1 className="mt-4 text-5xl font-medium tracking-[-.05em] text-milk sm:text-7xl">Статьи</h1>
         <p className="mt-5 max-w-xl text-lg leading-8 text-muted">Заметки об атрибуции, оценке и бережном обращении с буддийскими предметами.</p>
@@ -40,7 +42,9 @@ export default async function BlogPage() {
           {!isUnavailable && articles.length === 0 ? <p className="border-t border-white/10 py-8 text-muted">Пока нет опубликованных статей.</p> : null}
           {articles.map((article, index) => <BlogCard key={article.slug} article={article} index={index} />)}
         </div>
-      </Container>
-    </main>
+        </Container>
+      </main>
+      <footer className="bg-[#03060b] pb-10"><Container><SiteFooter /></Container></footer>
+    </>
   );
 }

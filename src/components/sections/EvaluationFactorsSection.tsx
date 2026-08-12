@@ -82,7 +82,7 @@ export function EvaluationFactorsSection() {
   const rightFactors = evaluationFactors.filter((factor) => factor.side === "right");
 
   return (
-    <section id="evaluation" className="evaluation-lab relative overflow-hidden border-t border-white/[0.06] py-24 sm:py-32">
+    <section id="evaluation" className="evaluation-lab relative overflow-x-clip border-t border-white/[0.06] py-24 sm:py-32">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_52%,rgba(109,151,190,.1),transparent_34%)]" aria-hidden="true" />
       <Container className="relative">
         <SectionHeading eyebrow="Принципы атрибуции" title="Факторы оценки статуэтки" description="От чего зависит стоимость вашей фигурки: цена каждого предмета индивидуальна и складывается из множества факторов." align="center" />
@@ -101,13 +101,15 @@ export function EvaluationFactorsSection() {
           </div>
         </div>
 
-        <div className="mt-12 lg:hidden">
-          <div className="evaluation-lab__specimen relative mx-auto aspect-square w-full max-w-[560px]">
-            <div className="absolute inset-[6%] rounded-full border border-cold/15" />
-            <Image src={centerImage} alt="Многофигурная бронзовая буддийская статуэтка" fill sizes="(max-width: 768px) 95vw, 560px" className="artifact-specimen-image object-contain mix-blend-lighten" />
-            <MobileMarkers />
+        <div className="evaluation-mobile-layout mt-12 lg:hidden">
+          <div className="evaluation-mobile-visual">
+            <div className="evaluation-lab__specimen relative mx-auto aspect-square w-full max-w-[560px]">
+              <div className="absolute inset-[6%] rounded-full border border-cold/15" />
+              <Image src={centerImage} alt="Многофигурная бронзовая буддийская статуэтка" fill sizes="(max-width: 768px) 95vw, 560px" className="artifact-specimen-image object-contain mix-blend-lighten" />
+              <MobileMarkers />
+            </div>
           </div>
-          <div className="mt-8 grid gap-x-8 gap-y-7 sm:grid-cols-2">
+          <div className="evaluation-mobile-factors grid gap-x-8 gap-y-7 sm:grid-cols-2">
             {evaluationFactors.map((factor) => <FactorCopy key={factor.number} factor={factor} />)}
           </div>
         </div>

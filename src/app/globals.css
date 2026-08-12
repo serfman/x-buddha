@@ -224,6 +224,8 @@ body { margin: 0; overflow-x: hidden; background: #03060b; color: var(--color-te
 }
 .evaluation-lab h3 { color: #e8d8bd; }
 
+.evaluation-mobile-factors { margin-top: 2rem; }
+
 .process-orbit {
   background:
     radial-gradient(ellipse at 12% 20%, rgba(55,91,126,.12), transparent 28%),
@@ -343,8 +345,8 @@ body { margin: 0; overflow-x: hidden; background: #03060b; color: var(--color-te
   backdrop-filter: blur(12px);
 }
 .final-exhibition__contacts a:hover { background: rgba(181,207,227,.1); }
-.final-exhibition__footer a { transition: color .2s ease; }
-.final-exhibition__footer a:hover { color: rgba(255,255,255,.92); }
+.site-footer a { transition: color .2s ease; }
+.site-footer a:hover { color: rgba(255,255,255,.92); }
 
 @media (min-width: 1024px) {
   .process-orbit__steps::after { left: 0; right: 0; top: 2rem; bottom: auto; width: auto; height: 1px; background: linear-gradient(to right, rgba(198,162,108,.42), rgba(156,193,223,.2), transparent); }
@@ -372,6 +374,40 @@ body { margin: 0; overflow-x: hidden; background: #03060b; color: var(--color-te
   }
   .final-exhibition__contacts > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .final-exhibition__contacts a { min-width: 0; padding-inline: .7rem; }
+}
+
+@media (max-width: 639px) and (min-height: 700px) {
+  .evaluation-mobile-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .evaluation-mobile-visual,
+  .evaluation-mobile-factors {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .evaluation-mobile-visual {
+    position: sticky;
+    top: 5rem;
+    z-index: 10;
+    align-self: start;
+    pointer-events: none;
+  }
+  .evaluation-mobile-factors {
+    z-index: 20;
+    gap: 54svh;
+    margin-top: min(88vw, 22rem);
+    padding-bottom: min(82vw, 20rem);
+  }
+  .evaluation-mobile-factors > div {
+    min-height: 8.75rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(191, 213, 231, .12);
+    background: rgba(4, 9, 16, .88);
+    padding: 1rem;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, .28);
+    backdrop-filter: blur(12px);
+  }
 }
 .article-body { color: var(--color-text-muted); font-size: 1.05rem; line-height: 1.85; }
 .article-body h2 { color: var(--color-text-primary); font-size: 1.75rem; line-height: 1.25; letter-spacing: -.03em; font-weight: 500; margin: 3rem 0 1.25rem; }

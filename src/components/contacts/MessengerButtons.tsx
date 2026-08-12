@@ -25,7 +25,7 @@ export function MessengerButtons({ compact = false, dark = false, prominent = fa
           } ${prominent ? "" : compact ? "sm:px-3" : "sm:px-4"}`}
         >
           <span className={`grid place-items-center rounded-full border border-current/25 font-semibold tracking-wide ${prominent ? "size-8 text-[11px]" : "size-7 text-[10px]"} ${prominent && messenger.name === "Telegram" ? "text-ink" : "text-cold"}`}>{messenger.short}</span>
-          <span className={compact ? "hidden sm:inline" : ""}>{messenger.name}</span>
+          <span>{messenger.name}</span>
         </a>
       ))}
     </div>

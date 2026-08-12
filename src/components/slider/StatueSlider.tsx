@@ -1,19 +1,42 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { site } from "@/data/site";
 import type { ImageAsset } from "@/types/content";
 
 export function StatueSlider({ images }: { images: ImageAsset[] }) {
   const [active, setActive] = useState(0);
+  const [interactionRevision, setInteractionRevision] = useState(0);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
   const hasImages = images.length > 0;
 
   useEffect(() => {
     if (images.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(() => setActive((current) => (current + 1) % images.length), site.slideDuration);
     return () => window.clearInterval(timer);
+  }, [images.length, interactionRevision]);
+
+  const move = useCallback((direction: 1 | -1) => {
+    setActive((current) => (current + direction + images.length) % images.length);
+    setInteractionRevision((current) => current + 1);
   }, [images.length]);
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touch = event.changedTouches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!touchStart.current || images.length < 2) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStart.current.x;
+    const deltaY = touch.clientY - touchStart.current.y;
+    touchStart.current = null;
+
+    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.25) return;
+    move(deltaX < 0 ? 1 : -1);
+  };
 
   const visible = useMemo(() => {
     if (!hasImages) return [];
@@ -33,7 +56,12 @@ export function StatueSlider({ images }: { images: ImageAsset[] }) {
           </div>
         ))}
       </div>
-      <div className="statue-gallery__frame statue-gallery__frame--active relative mx-auto aspect-[4/5] max-h-[430px] overflow-hidden rounded-[1.35rem] border bg-black/30 md:hidden">
+      <div
+        data-testid="mobile-statue-slider"
+        className="statue-gallery__frame statue-gallery__frame--active relative mx-auto aspect-[4/5] max-h-[430px] touch-pan-y overflow-hidden rounded-[1.35rem] border bg-black/30 md:hidden"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <Image src={images[active].src} alt={images[active].alt} fill sizes="(max-width: 767px) 88vw" className="object-cover transition-opacity duration-700" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent" />
       </div>

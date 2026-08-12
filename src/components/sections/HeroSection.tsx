@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ScrollLink } from "@/components/ui/ScrollLink";
 import { MessengerButtons } from "@/components/contacts/MessengerButtons";
 import { StatueSlider } from "@/components/slider/StatueSlider";
 import { sliderImages } from "@/lib/assets";
@@ -26,7 +26,7 @@ export function HeroSection() {
             ))}
           </div>
           <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-            <Link href="#process" className="rounded-full bg-milk px-6 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(190,220,255,.2)]">Оценить предмет</Link>
+            <ScrollLink href="#contact" className="rounded-full bg-milk px-6 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(190,220,255,.2)]">Оценить предмет</ScrollLink>
             <MessengerButtons compact location="hero" />
           </div>
         </div>

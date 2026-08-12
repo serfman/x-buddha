@@ -17,7 +17,7 @@ export function EvaluationProcessSection() {
             </li>
           ))}
         </ol>
-        <div id="contact" className="relative mt-14 overflow-hidden rounded-[2rem] border border-cold/20 bg-[linear-gradient(125deg,rgba(191,213,231,.11),rgba(255,255,255,.025)_52%,rgba(178,138,85,.08))] px-6 py-8 shadow-[0_24px_80px_rgba(0,0,0,.28)] sm:px-9 sm:py-10 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-10">
+        <div id="contact" className="relative mt-14 scroll-mt-24 overflow-hidden rounded-[2rem] border border-cold/20 bg-[linear-gradient(125deg,rgba(191,213,231,.11),rgba(255,255,255,.025)_52%,rgba(178,138,85,.08))] px-6 py-8 shadow-[0_24px_80px_rgba(0,0,0,.28)] sm:px-9 sm:py-10 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-10">
           <span className="pointer-events-none absolute -right-20 -top-28 size-64 rounded-full border border-cold/10 shadow-[0_0_90px_rgba(191,213,231,.08)]" aria-hidden="true" />
           <div className="relative max-w-2xl">
             <p className="text-balance text-2xl font-medium tracking-[-.035em] text-milk sm:text-3xl">{site.process.cta}</p>
