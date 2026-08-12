@@ -68,7 +68,9 @@
 
 | Режим | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Mobile | — | — | — | — | — | — | — |
-| Desktop | — | — | — | — | — | — | — |
+| Mobile | 97 | 100 | 100 | 100 | 1,1 с | 0 | 40 мс |
+| Desktop | 92 | 100 | 100 | 100 | 0,7 с | 0 | 10 мс |
 
-После завершения production-проверки P6 закрыт: выполнены все восемь из восьми work items.
+Первый mobile-run после deployment дал 79 при LCP 2,4 с и TBT 430 мс; немедленный повтор — 97 при LCP 1,1 с и TBT 40 мс. Повтор воспроизвёл baseline задачи 018, поэтому первый результат отнесён к лабораторному шуму холодного запуска, а не к устойчивой регрессии. Desktop Performance 92 ниже прошлого 96, но LCP 0,7 с, CLS 0 и TBT 10 мс не показывают существенного ухудшения пользовательских метрик.
+
+Production Docker build и deployment commit `71040e3` завершились успешно; главная, блог, статья, privacy и health endpoint вернули HTTP 200, frontend/Directus/PostgreSQL healthy. После production-проверки P6 закрыт: выполнены все восемь из восьми work items.
